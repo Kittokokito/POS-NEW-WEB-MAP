@@ -223,15 +223,30 @@
                 const result = await response.json();
 
                 if (result.status === 'success') {
-                    menuItems = result.data.map(item => ({
-                        id: item.ItemID,
-                        name: item.Name,
-                        image: item.ImageURL || `https://placehold.co/400x300/e5e7eb/555?text=${encodeURIComponent(item.Name)}`,
-                        options: item.Options.split(',').map(opt => {
-                            const [label, priceStr] = opt.split(':');
-                            return { label: label.trim(), price: parseInt(priceStr.trim(), 10), key: label.trim() };
-                        })
-                    }));
+                    // **FIXED:** Added robust parsing for menu options to prevent errors
+                    menuItems = result.data.map(item => {
+                        const options = (item.Options || '')
+                            .split(',')
+                            .map(opt => {
+                                if (!opt || !opt.includes(':')) return null;
+                                const [label, priceStr] = opt.split(':');
+                                if (label && priceStr) {
+                                    const price = parseInt(priceStr.trim(), 10);
+                                    if (!isNaN(price)) {
+                                        return { label: label.trim(), price: price, key: label.trim() };
+                                    }
+                                }
+                                return null;
+                            })
+                            .filter(Boolean); // Removes any null entries from bad data
+
+                        return {
+                            id: item.ItemID,
+                            name: item.Name,
+                            image: item.ImageURL || `https://placehold.co/400x300/e5e7eb/555?text=${encodeURIComponent(item.Name)}`,
+                            options: options
+                        };
+                    });
                     renderMenuItems();
                 } else {
                     throw new Error(result.message);
