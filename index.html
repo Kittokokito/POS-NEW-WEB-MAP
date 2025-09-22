@@ -160,11 +160,18 @@
 
             /* == Specific Fix for In-App Browser font scaling issue == */
             .is-line-browser .menu-card .text-2xl,
-            .is-messenger-browser .menu-card .text-2xl,
             .is-safari-browser .menu-card .text-2xl,
             .is-edge-browser .menu-card .text-2xl,
             .is-samsung-browser .menu-card .text-2xl {
                 font-size: 1rem; /* Reduce font size for the entire option row in these browsers */
+            }
+            
+            /* More aggressive fix for Facebook Messenger's font scaling */
+            .is-messenger-browser .menu-card .text-2xl {
+                 font-size: 0.85rem; /* Make it even smaller to compensate for scaling */
+            }
+            .is-messenger-browser .menu-card .font-semibold { /* Target the price specifically */
+                white-space: nowrap; /* Prevent "70 บ." from wrapping */
             }
         }
 
