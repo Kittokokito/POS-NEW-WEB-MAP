@@ -1,0 +1,9 @@
+{
+    "openingTime": "09:00",
+    "closingTime": "17:00",
+    "closedDays": [0],
+    "specialHolidays": [
+        "2025-12-25",
+        "2026-01-01"
+    ]
+}

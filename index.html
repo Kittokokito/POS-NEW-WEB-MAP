@@ -195,13 +195,26 @@
             </div>
         </div>
     </header>
+    
+    <!-- NEW: Closed Shop Message -->
+    <div id="closed-message" class="hidden container py-12 text-center">
+        <div class="bg-white p-12 rounded-lg shadow-lg">
+            <h2 class="text-5xl font-bold text-red-600 mb-4">ขออภัย ร้านปิดให้บริการ</h2>
+            <p class="text-2xl text-gray-700 mb-8">
+                ทางร้านเปิดรับออเดอร์ในเวลา <br>
+                <span id="opening-hours-display" class="font-bold text-green-800"></span>
+            </p>
+            <p class="text-xl text-gray-500">ขอบคุณที่ใช้บริการครับ</p>
+        </div>
+    </div>
+
 
     <!-- Main Content - Menu Page -->
     <main class="container py-12" id="menu-page">
         <h2 class="text-6xl font-bold text-center mb-12">เมนูอาหาร</h2>
         <div class="grid grid-cols-1 gap-12" id="menu-list">
             <!-- Loading indicator -->
-            <p class="text-center col-span-full text-gray-500 text-2xl">กำลังโหลดเมนูอาหาร...</p>
+            <p class="text-center col-span-full text-gray-500 text-2xl" id="loading-text">กำลังโหลดเมนูอาหาร...</p>
         </div>
     </main>
 
@@ -298,6 +311,12 @@
 
 
     <script>
+        // --- การตั้งค่า (Configuration) ---
+        // ใส่ลิงก์ "Raw" ของไฟล์ config.json ที่คุณสร้างไว้ใน GitHub ที่นี่
+        const CONFIG_URL = "YOUR_GITHUB_RAW_CONFIG_JSON_URL";
+        // ----------------------------------
+
+
         // FIXED: Using a self-invoking function to prevent re-declaration errors
         (function() {
             const ua = navigator.userAgent.toLowerCase();
@@ -322,13 +341,18 @@
         // !!! IMPORTANT !!!
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzDt0gvMPJUztj_4yQ6Ygb8c3G0aSSB9zE9oJZ2OJiqzcvHbtuy7ckLqvBErBJn5rxA/exec";
 
+        let shopConfig = {};
         let menuItems = [];
         let cart = [];
         let userLocation = null;
         let deliveryCost = 0;
 
         // Element references
+        const menuPage = document.getElementById('menu-page');
+        const closedMessage = document.getElementById('closed-message');
+        const openingHoursDisplay = document.getElementById('opening-hours-display');
         const menuList = document.getElementById('menu-list');
+        const loadingText = document.getElementById('loading-text');
         const totalPriceEl = document.getElementById('total-price');
         const footer = document.getElementById('footer');
         const summaryModal = document.getElementById('summary-modal');
@@ -340,6 +364,52 @@
         const finalTotalEl = document.getElementById('final-total');
         const getLocationBtn = document.getElementById('get-location-btn');
         const proceedToCheckoutBtn = document.getElementById('proceed-to-checkout-btn');
+        
+        // NEW: Function to fetch shop configuration from external file
+        async function fetchShopConfig() {
+            // A simple check for a placeholder URL
+            if (CONFIG_URL.includes("YOUR_GITHUB_RAW_CONFIG_JSON_URL")) {
+                 loadingText.innerHTML = `<p class="text-center col-span-full text-red-500">ข้อผิดพลาด: กรุณาตั้งค่าลิงก์ไฟล์ config.json ในโค้ด index.html ก่อน</p>`;
+                return;
+            }
+            try {
+                const response = await fetch(CONFIG_URL + '?t=' + new Date().getTime()); // Append timestamp to prevent caching
+                if (!response.ok) throw new Error('ไม่สามารถโหลดไฟล์ตั้งค่า (config.json) ได้');
+                shopConfig = await response.json();
+                
+                // After config is loaded, check shop status and proceed
+                if (checkShopStatus()) {
+                    menuPage.classList.remove('hidden');
+                    closedMessage.classList.add('hidden');
+                    fetchMenu();
+                } else {
+                    menuPage.style.display = 'none';
+                    closedMessage.classList.remove('hidden');
+                    openingHoursDisplay.innerText = `${shopConfig.openingTime} - ${shopConfig.closingTime} น.`;
+                }
+            } catch (error) {
+                loadingText.innerHTML = `<p class="text-center col-span-full text-red-500">เกิดข้อผิดพลาด: ${error.message}</p>`;
+            }
+        }
+        
+        function checkShopStatus() {
+            if (!shopConfig.openingTime) return false; // Not ready yet
+
+            const now = new Date();
+            const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+            const dayOfWeek = now.getDay();
+            const currentTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+            const isHoliday = (shopConfig.specialHolidays || []).includes(today);
+            const isClosedDay = (shopConfig.closedDays || []).includes(dayOfWeek);
+            const isOutsideHours = currentTime < shopConfig.openingTime || currentTime >= shopConfig.closingTime;
+
+            if (isHoliday || isClosedDay || isOutsideHours) {
+                return false; // Shop is closed
+            }
+            return true; // Shop is open
+        }
+
 
         // Fetch menu from Google Apps Script
         async function fetchMenu() {
@@ -606,8 +676,12 @@
                 submitBtn.innerText = 'ยืนยันการสั่งอาหาร';
             }
         });
+        
+        // Run shop status check on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchShopConfig();
+        });
 
-        fetchMenu();
     </script>
 
 </body>
