@@ -218,27 +218,36 @@
         // Fetch menu from Google Apps Script
         async function fetchMenu() {
             try {
-                const response = await fetch(GAS_URL); // GET request to doGet
+                const response = await fetch(GAS_URL);
                 if (!response.ok) throw new Error('Network response was not ok');
                 const result = await response.json();
 
                 if (result.status === 'success') {
-                    // **FIXED:** Added robust parsing for menu options to prevent errors
                     menuItems = result.data.map(item => {
-                        const options = (item.Options || '')
-                            .split(',')
-                            .map(opt => {
-                                if (!opt || !opt.includes(':')) return null;
-                                const [label, priceStr] = opt.split(':');
-                                if (label && priceStr) {
-                                    const price = parseInt(priceStr.trim(), 10);
-                                    if (!isNaN(price)) {
-                                        return { label: label.trim(), price: price, key: label.trim() };
+                        let options = [];
+                        // Case 1: Item has multiple options defined in the 'Options' column
+                        if (item.Options && item.Options.trim() !== '') {
+                            options = (item.Options || '').split(',')
+                                .map(opt => {
+                                    if (!opt || !opt.includes(':')) return null;
+                                    const [label, priceStr] = opt.split(':');
+                                    if (label && priceStr) {
+                                        const price = parseInt(priceStr.trim(), 10);
+                                        if (!isNaN(price)) {
+                                            return { label: label.trim(), price: price, key: label.trim() };
+                                        }
                                     }
-                                }
-                                return null;
-                            })
-                            .filter(Boolean); // Removes any null entries from bad data
+                                    return null;
+                                }).filter(Boolean);
+                        } 
+                        // Case 2: Item has a single price defined in the 'Price' column
+                        else if (item.Price && !isNaN(parseInt(item.Price, 10))) {
+                            options = [{
+                                label: 'ราคา', // Generic label, won't be shown
+                                price: parseInt(item.Price, 10),
+                                key: 'default' // Special key for single-price items
+                            }];
+                        }
 
                         return {
                             id: item.ItemID,
@@ -260,24 +269,51 @@
         function renderMenuItems() {
             menuList.innerHTML = '';
             menuItems.forEach(item => {
+                // Do not render items that have no valid options or price
+                if (!item.options || item.options.length === 0) {
+                    return;
+                }
+
                 const card = document.createElement('div');
                 card.className = 'menu-card p-4';
+                
+                const isSimpleItem = item.options.length === 1 && item.options[0].key === 'default';
+                let optionsHTML = '';
+
+                if (isSimpleItem) {
+                    // RENDER FOR SINGLE-PRICE ITEM
+                    const option = item.options[0];
+                    optionsHTML = `
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold text-blue-900">${option.price} บาท</span>
+                            <div class="flex items-center gap-2">
+                                <button class="btn btn-secondary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
+                                <span id="${item.id}-${option.key}-qty" class="qty-display w-8 text-center text-lg font-bold">0</span>
+                                <button class="btn btn-primary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // RENDER FOR MULTI-OPTION ITEM
+                    optionsHTML = item.options.map(option => `
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-800">${option.label}</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-600 font-semibold">${option.price} บ.</span>
+                                <button class="btn btn-secondary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
+                                <span id="${item.id}-${option.key}-qty" class="qty-display w-8 text-center text-lg font-bold">0</span>
+                                <button class="btn btn-primary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
                 card.innerHTML = `
                     <div class="flex-grow">
                         <img src="${item.image}" alt="${item.name}" class="rounded-lg mb-4 w-full h-48 object-cover">
                         <h3 class="text-xl font-bold mb-3">${item.name}</h3>
                         <div class="options space-y-2">
-                            ${item.options.map(option => `
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-800">${option.label}</span>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-gray-600 font-semibold">${option.price} บ.</span>
-                                        <button class="btn btn-secondary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
-                                        <span id="${item.id}-${option.key}-qty" class="qty-display w-8 text-center text-lg font-bold">0</span>
-                                        <button class="btn btn-primary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
-                                    </div>
-                                </div>
-                            `).join('')}
+                            ${optionsHTML}
                         </div>
                     </div>
                     <div class="mt-4 pt-4 border-t">
@@ -289,6 +325,7 @@
             });
         }
 
+
         // Update quantity in cart
         window.updateQuantity = (itemId, optionKey, change) => {
             const menuItem = menuItems.find(i => i.id === itemId);
@@ -296,7 +333,8 @@
             let cartItem = cart.find(i => i.id === itemId && i.optionKey === optionKey);
 
             if (!cartItem && change > 0) {
-                cartItem = { id: itemId, name: menuItem.name, optionLabel: option.label, optionKey: optionKey, price: option.price, quantity: 0, note: '' };
+                 const isSimpleItem = option.key === 'default';
+                cartItem = { id: itemId, name: menuItem.name, optionLabel: isSimpleItem ? '' : option.label, optionKey: optionKey, price: option.price, quantity: 0, note: '' };
                 cart.push(cartItem);
             }
             
@@ -335,10 +373,13 @@
                 const noteInput = document.getElementById(`${item.id}-note`);
                 item.note = noteInput ? noteInput.value.trim() : '';
                 
+                // Display name differently for simple vs multi-option items
+                const displayName = item.optionLabel ? `${item.name} (${item.optionLabel})` : item.name;
+
                 summaryList.innerHTML += `
                     <div class="flex justify-between items-start bg-gray-50 p-3 rounded-lg">
                         <div>
-                            <p class="font-semibold">${item.name} (${item.optionLabel}) x ${item.quantity}</p>
+                            <p class="font-semibold">${displayName} x ${item.quantity}</p>
                             ${item.note ? `<p class="text-xs text-blue-600 italic">พิเศษ: ${item.note}</p>` : ''}
                         </div>
                         <span class="font-bold whitespace-nowrap">${item.price * item.quantity} บาท</span>
@@ -412,7 +453,8 @@
 
             const foodTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const orderDetails = cart.map(item => {
-                let detail = `${item.name} (${item.optionLabel}) x${item.quantity}`;
+                 const displayName = item.optionLabel ? `${item.name} (${item.optionLabel})` : item.name;
+                let detail = `${displayName} x${item.quantity}`;
                 if (item.note) detail += ` [${item.note}]`;
                 return detail;
             }).join(', ');
