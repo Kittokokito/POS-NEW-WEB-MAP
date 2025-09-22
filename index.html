@@ -271,6 +271,23 @@
             <h3 class="text-5xl font-bold text-green-600 mb-6">🙏 ขอบคุณครับ!</h3>
             <p class="text-3xl mb-6">ทางร้านได้รับออเดอร์แล้ว</p>
             <p class="text-xl text-gray-500 mb-8">กรุณารอรับการติดต่อจากทางร้านนะครับ</p>
+
+            <!-- UPDATED: Added Order Summary to Thank You Modal -->
+            <div class="my-8 text-left border-t border-b border-gray-200 py-6 space-y-3">
+                <div class="flex justify-between items-center text-xl">
+                    <span class="text-gray-600">ยอดรวมค่าอาหาร:</span>
+                    <span id="thankyou-food-total" class="font-semibold text-gray-800">0 บาท</span>
+                </div>
+                <div class="flex justify-between items-center text-xl">
+                    <span class="text-gray-600">ค่าจัดส่ง:</span>
+                    <span id="thankyou-delivery-fee" class="font-semibold text-gray-800">0 บาท</span>
+                </div>
+                <div class="flex justify-between items-center text-2xl font-bold">
+                    <span>ยอดชำระทั้งหมด:</span>
+                    <span id="thankyou-grand-total" class="text-green-800">0 บาท</span>
+                </div>
+            </div>
+
             <div class="bg-yellow-100 p-6 rounded-lg border border-yellow-300">
                 <p class="font-bold text-3xl text-red-600">คำแนะนำการชำระเงิน</p>
                 <p class="mt-4 text-xl">ลูกค้ารับอาหารแล้วค่อยสแกนจ่ายด้วย QR Code ในถุงอาหาร <span class="font-bold text-red-600">**ไม่ต้อง**</span> จ่ายเงินให้ไรเดอร์ (ทางร้านสำรองจ่ายไปก่อนแล้วครับ)</p>
@@ -573,6 +590,12 @@
                 });
                 const result = await response.json();
                 if (result.status === 'success') {
+                    // UPDATED: Populate Thank You modal before showing
+                    const grandTotal = payload.totalPrice + payload.deliveryFee;
+                    document.getElementById('thankyou-food-total').innerText = `${payload.totalPrice} บาท`;
+                    document.getElementById('thankyou-delivery-fee').innerText = `${payload.deliveryFee} บาท`;
+                    document.getElementById('thankyou-grand-total').innerText = `${grandTotal} บาท`;
+
                     checkoutModal.style.display = 'none';
                     thankYouModal.style.display = 'flex';
                 } else {
