@@ -10,7 +10,6 @@
         body {
             font-family: 'Kanit', sans-serif;
             background-color: #f7f7f7;
-            /* Base font size increased */
             font-size: 18px; 
         }
         .container {
@@ -30,7 +29,6 @@
             transform: translateY(-5px);
         }
         .btn {
-            /* Increased padding and font size */
             padding: 0.75rem 1.5rem;
             border-radius: 9999px;
             font-weight: 600;
@@ -42,12 +40,13 @@
             background-color: #9ca3af;
             cursor: not-allowed;
         }
+        /* -- Theme Color Update (Green) -- */
         .btn-primary {
-            background-color: #1e3a8a; /* Darker Blue */
+            background-color: #15803d; /* Dark Green */
             color: white;
         }
         .btn-primary:hover:not(:disabled) {
-            background-color: #1c3473;
+            background-color: #166534;
         }
         .btn-secondary {
             background-color: #e5e7eb;
@@ -61,9 +60,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: #111827;
-            color: white;
-            padding: 1.5rem; /* Increased padding */
+            padding: 1.5rem;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
             display: none;
             z-index: 1000;
@@ -84,7 +81,7 @@
         }
         .modal-content {
             background-color: white;
-            padding: 2.5rem; /* Increased padding */
+            padding: 2.5rem;
             border-radius: 12px;
             max-width: 500px;
             width: 90%;
@@ -92,15 +89,83 @@
             overflow-y: auto;
             position: relative;
         }
+        
+        /* -- UPDATED: Green Background for Header and Footer -- */
+        .main-header, .floating-footer {
+            color: #14532d; /* UPDATED: Changed text to dark green for better contrast */
+            background-color: #4ade80; /* Fallback color */
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3e%3cdefs%3e%3clinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3e%3cstop offset='0%25' style='stop-color:%23a7f3d0;stop-opacity:1' /%3e%3cstop offset='100%25' style='stop-color:%234ade80;stop-opacity:1' /%3e%3c/linearGradient%3e%3c/defs%3e%3crect width='100%25' height='100%25' fill='url(%23grad)'/%3e%3cg fill='none' stroke='%2314532d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.1'%3e%3cpath transform='translate(20 20) scale(0.6)' d='M79.4,51.8C79.4,72,63.1,80.6,50,80.6S20.6,72,20.6,51.8C20.6,31.6,30,23,50,23S79.4,31.6,79.4,51.8z'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M43.9,23.8c0-5.3-4.3-9.6-9.6-9.6s-9.6,4.3-9.6,9.6'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M65.7,23.8c0-5.3,4.3-9.6,9.6-9.6c5.3,0,9.6,4.3,9.6,9.6'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M50,60.2c-5.5,0-10-4.5-10-10c0-5.5,4.5-10,10-10s10,4.5,10,10C60,55.7,55.5,60.2,50,60.2z'/%3e%3ccircle transform='translate(20 20) scale(0.6)' cx='46.5' cy='50.2' r='1.5'/%3e%3ccircle transform='translate(20 20) scale(0.6)' cx='53.5' cy='50.2' r='1.5'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M50,68.9c-2,0-3.8-0.7-5.3-2'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M79.4,51.8C79.4,72,63.1,80.6,50,80.6S20.6,72,20.6,51.8C20.6,31.6,30,23,50,23S79.4,31.6,79.4,51.8z'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M43.9,23.8c0-5.3-4.3-9.6-9.6-9.6s-9.6,4.3-9.6,9.6'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M65.7,23.8c0-5.3,4.3-9.6,9.6-9.6c5.3,0,9.6,4.3,9.6,9.6'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M50,60.2c-5.5,0-10-4.5-10-10c0-5.5,4.5-10,10-10s10,4.5,10,10C60,55.7,55.5,60.2,50,60.2z'/%3e%3ccircle transform='translate(120 130) scale(0.4)' cx='46.5' cy='50.2' r='1.5'/%3e%3ccircle transform='translate(120 130) scale(0.4)' cx='53.5' cy='50.2' r='1.5'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M50,68.9c-2,0-3.8-0.7-5.3-2'/%3e%3ccircle cx='150' cy='50' r='10' opacity='0.7'/%3e%3ccircle cx='80' cy='160' r='5' opacity='0.7'/%3e%3c/g%3e%3c/svg%3e");
+            background-size: 200px 200px;
+        }
+
+        /* == Responsive Fix for LINE Browser & Mobile == */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px; /* Reset base font size for mobile */
+            }
+            /* Header */
+            header .container {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+             header .flex.items-center {
+                flex-direction: column;
+            }
+            header .flex.flex-col.items-end {
+                align-items: center;
+            }
+            header img {
+                 width: 4rem; /* 64px */
+                 height: 4rem;
+                 margin-right: 0;
+                 margin-bottom: 0.5rem;
+            }
+            header h1 {
+                font-size: 2rem; /* 32px */
+            }
+            header p, header span {
+                font-size: 0.875rem; /* 14px */
+            }
+            main h2 {
+                font-size: 1.875rem; /* 30px */
+                margin-bottom: 2rem;
+            }
+
+            /* Menu Card */
+            .menu-card h3 {
+                font-size: 1.25rem; /* 20px */
+            }
+            .menu-card .text-4xl { font-size: 1.5rem; } /* Price */
+            .menu-card .text-2xl { font-size: 1rem; } /* Option Label */
+            .menu-card .w-12.h-12 { width: 2.5rem; height: 2.5rem; } /* +/- Buttons */
+            .menu-card .text-3xl { font-size: 1.25rem; } /* Qty display */
+            
+            /* Footer */
+            .floating-footer { padding: 1rem; }
+            .floating-footer .text-3xl { font-size: 1.125rem; } /* "รวม:" */
+            .floating-footer .text-4xl { font-size: 1.5rem; } /* Total price */
+            .floating-footer .btn { font-size: 0.875rem; padding: 0.5rem 1rem; }
+            
+            /* Modals */
+            .modal-content { padding: 1.5rem; }
+            .modal-content h3 { font-size: 1.5rem; }
+            .modal-content .text-xl, .modal-content .text-2xl, .modal-content .text-3xl, .modal-content .text-4xl, .modal-content .text-5xl {
+                font-size: 1.125rem;
+            }
+             .modal-content .font-bold.text-3xl.text-red-600 { font-size: 1.25rem; }
+        }
+
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header -->
-    <header class="bg-blue-900 text-white py-6 px-6 shadow-lg sticky top-0 z-50">
+    <header class="main-header py-4 px-6 shadow-lg sticky top-0 z-50">
         <div class="container flex items-center justify-between">
             <div class="flex items-center">
-                <img src="https://drive.google.com/uc?export=view&id=18SWBkmI6labwU_TtzgmytZAVr1BrhdGc" alt="P.Pork Leg Logo" class="rounded-full w-20 h-20 mr-6 bg-white p-1">
+                <!-- LOGO UPDATED -->
+                <img src="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/refs/heads/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9A%20%201500%20dpi%20copy.jpg" alt="P.Pork Leg Logo" class="rounded-full w-20 h-20 mr-6 bg-white p-1 object-contain">
                 <div>
                     <h1 class="text-5xl font-bold">ป.ขาหมู</h1>
                     <p class="text-xl mt-2">ราคาเท่าหน้าร้าน ค่าส่งตามจริง</p>
@@ -147,12 +212,13 @@
                     <span class="font-semibold">ค่าจัดส่ง:</span>
                     <span id="delivery-fee" class="font-semibold text-gray-500">กรุณากดขอ Location</span>
                 </div>
-                <div class="flex justify-between items-center font-bold text-3xl text-blue-900">
+                <!-- -- Theme Color Update (Green) -- -->
+                <div class="flex justify-between items-center font-bold text-3xl text-green-800">
                     <span>รวมยอดที่ต้องชำระ:</span>
                     <span id="final-total">0 บาท</span>
                 </div>
             </div>
-            <button id="get-location-btn" class="w-full btn btn-primary mt-8 py-4 text-2xl">📍 ขอ Location และคำนวณค่าส่ง</button>
+            <button id="get-location-btn" class="w-full btn btn-primary mt-8 py-4 text-2xl">กดเพื่อปักหมุดและคำนวณค่าส่ง</button>
             <button id="proceed-to-checkout-btn" class="w-full btn btn-primary mt-4 py-4 text-2xl hidden">กรอกข้อมูลการจัดส่ง</button>
         </div>
     </div>
@@ -165,15 +231,15 @@
             <form id="checkout-form" class="space-y-6">
                 <div>
                     <label for="nickname" class="block text-xl font-medium text-gray-700">ชื่อเล่น:</label>
-                    <input type="text" id="nickname" name="nickname" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-xl" required>
+                    <input type="text" id="nickname" name="nickname" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-4 text-xl" required>
                 </div>
                 <div>
                     <label for="phone" class="block text-xl font-medium text-gray-700">เบอร์โทรศัพท์:</label>
-                    <input type="tel" id="phone" name="phone" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-xl" required>
+                    <input type="tel" id="phone" name="phone" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-4 text-xl" required>
                 </div>
                 <div>
                     <label for="address" class="block text-xl font-medium text-gray-700">ที่อยู่จัดส่ง (จุดสังเกต):</label>
-                    <textarea id="address" name="address" rows="3" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-xl" required></textarea>
+                    <textarea id="address" name="address" rows="3" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-4 text-xl" required></textarea>
                 </div>
                 <button type="submit" class="w-full btn btn-primary py-4 text-2xl">ยืนยันการสั่งอาหาร</button>
             </form>
@@ -197,7 +263,6 @@
 
     <script>
         // !!! IMPORTANT !!!
-        // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzDt0gvMPJUztj_4yQ6Ygb8c3G0aSSB9zE9oJZ2OJiqzcvHbtuy7ckLqvBErBJn5rxA/exec";
 
         let menuItems = [];
@@ -229,7 +294,6 @@
                 if (result.status === 'success') {
                     menuItems = result.data.map(item => {
                         let options = [];
-                        // Case 1: Item has multiple options defined in the 'Options' column
                         if (item.Options && item.Options.trim() !== '') {
                             options = (item.Options || '').split(',')
                                 .map(opt => {
@@ -244,12 +308,11 @@
                                     return null;
                                 }).filter(Boolean);
                         } 
-                        // Case 2: Item has a single price defined in the 'Price' column
                         else if (item.Price && !isNaN(parseInt(item.Price, 10))) {
                             options = [{
-                                label: 'ราคา', // Generic label, won't be shown
+                                label: 'ราคา',
                                 price: parseInt(item.Price, 10),
-                                key: 'default' // Special key for single-price items
+                                key: 'default'
                             }];
                         }
 
@@ -273,7 +336,6 @@
         function renderMenuItems() {
             menuList.innerHTML = '';
             menuItems.forEach(item => {
-                // Do not render items that have no valid options or price
                 if (!item.options || item.options.length === 0) {
                     return;
                 }
@@ -285,11 +347,10 @@
                 let optionsHTML = '';
 
                 if (isSimpleItem) {
-                    // RENDER FOR SINGLE-PRICE ITEM
                     const option = item.options[0];
                     optionsHTML = `
                         <div class="flex justify-between items-center">
-                            <span class="text-4xl font-bold text-blue-900">${option.price} บาท</span>
+                            <span class="text-4xl font-bold text-green-800">${option.price} บาท</span>
                             <div class="flex items-center gap-4">
                                 <button class="btn btn-secondary text-3xl p-2 w-12 h-12 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
                                 <span id="${item.id}-${option.key}-qty" class="qty-display w-12 text-center text-3xl font-bold">0</span>
@@ -298,7 +359,6 @@
                         </div>
                     `;
                 } else {
-                    // RENDER FOR MULTI-OPTION ITEM
                     optionsHTML = item.options.map(option => `
                         <div class="flex justify-between items-center text-2xl">
                             <span class="text-gray-800">${option.label}</span>
@@ -322,15 +382,13 @@
                     </div>
                     <div class="mt-6 pt-6 border-t">
                         <label for="${item.id}-note" class="block text-xl font-medium text-gray-700">คำสั่งพิเศษ (ถ้ามี):</label>
-                        <input type="text" id="${item.id}-note" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm p-4 text-xl" placeholder="เช่น ไม่เอาผัก, เพิ่มไข่ดาว...">
+                        <input type="text" id="${item.id}-note" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-4 text-xl" placeholder="เช่น ไม่เอาผัก, เพิ่มไข่ดาว...">
                     </div>
                 `;
                 menuList.appendChild(card);
             });
         }
 
-
-        // Update quantity in cart
         window.updateQuantity = (itemId, optionKey, change) => {
             const menuItem = menuItems.find(i => i.id === itemId);
             const option = menuItem.options.find(o => o.key === optionKey);
@@ -353,14 +411,12 @@
             updateFooter();
         }
 
-        // Update floating footer
         function updateFooter() {
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             totalPriceEl.innerText = `${totalPrice} บาท`;
             footer.style.display = totalPrice > 0 ? 'flex' : 'none';
         }
 
-        // Event Listeners for Modals
         document.getElementById('view-summary-btn').addEventListener('click', () => {
             if (cart.length === 0) return;
             updateSummaryModal();
@@ -377,14 +433,13 @@
                 const noteInput = document.getElementById(`${item.id}-note`);
                 item.note = noteInput ? noteInput.value.trim() : '';
                 
-                // Display name differently for simple vs multi-option items
                 const displayName = item.optionLabel ? `${item.name} (${item.optionLabel})` : item.name;
 
                 summaryList.innerHTML += `
                     <div class="flex justify-between items-start bg-gray-50 p-4 rounded-lg text-xl">
                         <div>
                             <p class="font-semibold">${displayName} x ${item.quantity}</p>
-                            ${item.note ? `<p class="text-lg text-blue-600 italic">พิเศษ: ${item.note}</p>` : ''}
+                            ${item.note ? `<p class="text-lg text-green-600 italic">พิเศษ: ${item.note}</p>` : ''}
                         </div>
                         <span class="font-bold whitespace-nowrap">${item.price * item.quantity} บาท</span>
                     </div>`;
@@ -398,7 +453,6 @@
             getLocationBtn.classList.remove('hidden');
         }
 
-        // Get Location and Calculate Fee
         getLocationBtn.addEventListener('click', () => {
             deliveryFeeEl.innerText = 'กำลังค้นหาตำแหน่ง...';
             getLocationBtn.disabled = true;
@@ -442,13 +496,11 @@
             });
         });
 
-        // Proceed to Checkout
         proceedToCheckoutBtn.addEventListener('click', () => {
             summaryModal.style.display = 'none';
             checkoutModal.style.display = 'flex';
         });
 
-        // Handle Checkout Form Submission
         document.getElementById('checkout-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -493,7 +545,6 @@
             }
         });
 
-        // Initial fetch
         fetchMenu();
     </script>
 
