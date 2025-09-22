@@ -10,6 +10,8 @@
         body {
             font-family: 'Kanit', sans-serif;
             background-color: #f7f7f7;
+            /* Base font size increased */
+            font-size: 18px; 
         }
         .container {
             max-width: 960px;
@@ -28,11 +30,13 @@
             transform: translateY(-5px);
         }
         .btn {
-            padding: 0.5rem 1rem;
+            /* Increased padding and font size */
+            padding: 0.75rem 1.5rem;
             border-radius: 9999px;
             font-weight: 600;
             transition: background-color 0.2s;
             cursor: pointer;
+            font-size: 1.25rem;
         }
         .btn:disabled {
             background-color: #9ca3af;
@@ -59,7 +63,7 @@
             right: 0;
             background-color: #111827;
             color: white;
-            padding: 1rem;
+            padding: 1.5rem; /* Increased padding */
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
             display: none;
             z-index: 1000;
@@ -80,7 +84,7 @@
         }
         .modal-content {
             background-color: white;
-            padding: 2rem;
+            padding: 2.5rem; /* Increased padding */
             border-radius: 12px;
             max-width: 500px;
             width: 90%;
@@ -93,35 +97,35 @@
 <body class="antialiased">
 
     <!-- Header -->
-    <header class="bg-blue-900 text-white py-4 px-6 shadow-lg sticky top-0 z-50">
+    <header class="bg-blue-900 text-white py-6 px-6 shadow-lg sticky top-0 z-50">
         <div class="container flex items-center justify-between">
             <div class="flex items-center">
-                <img src="https://drive.google.com/uc?export=view&id=18SWBkmI6labwU_TtzgmytZAVr1BrhdGc" alt="P.Pork Leg Logo" class="rounded-full w-12 h-12 mr-4 bg-white p-1">
+                <img src="https://drive.google.com/uc?export=view&id=18SWBkmI6labwU_TtzgmytZAVr1BrhdGc" alt="P.Pork Leg Logo" class="rounded-full w-20 h-20 mr-6 bg-white p-1">
                 <div>
-                    <h1 class="text-2xl font-bold">ป.ขาหมู</h1>
-                    <p class="text-sm mt-1">สั่งอาหารเดลิเวอรี่ ราคาเท่าหน้าร้าน ค่าส่งตามจริง</p>
+                    <h1 class="text-5xl font-bold">ป.ขาหมู</h1>
+                    <p class="text-xl mt-2">สั่งอาหารเดลิเวอรี่ ราคาเท่าหน้าร้าน ค่าส่งตามจริง</p>
                 </div>
             </div>
             <div class="flex flex-col items-end">
-                <span class="text-sm font-semibold">โทร: 086-262-4788</span>
+                <span class="text-xl font-semibold">โทร: 086-262-4788</span>
             </div>
         </div>
     </header>
 
     <!-- Main Content - Menu Page -->
-    <main class="container py-8" id="menu-page">
-        <h2 class="text-3xl font-bold text-center mb-8">เมนูอาหาร</h2>
-        <div class="grid grid-cols-1 gap-8" id="menu-list">
+    <main class="container py-12" id="menu-page">
+        <h2 class="text-6xl font-bold text-center mb-12">เมนูอาหาร</h2>
+        <div class="grid grid-cols-1 gap-12" id="menu-list">
             <!-- Loading indicator -->
-            <p class="text-center col-span-full text-gray-500">กำลังโหลดเมนูอาหาร...</p>
+            <p class="text-center col-span-full text-gray-500 text-2xl">กำลังโหลดเมนูอาหาร...</p>
         </div>
     </main>
 
     <!-- Floating Footer -->
     <div id="footer" class="floating-footer flex justify-between items-center">
-        <div class="flex items-center gap-2">
-            <span class="text-lg">รวม:</span>
-            <span id="total-price" class="text-2xl font-bold">0 บาท</span>
+        <div class="flex items-center gap-4">
+            <span class="text-3xl">รวม:</span>
+            <span id="total-price" class="text-4xl font-bold">0 บาท</span>
         </div>
         <button id="view-summary-btn" class="btn btn-primary">ดูสรุปรายการ</button>
     </div>
@@ -129,49 +133,49 @@
     <!-- Summary Modal -->
     <div id="summary-modal" class="summary-modal">
         <div class="modal-content">
-            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-            <h3 class="text-2xl font-bold mb-6">สรุปรายการสั่งซื้อ</h3>
-            <div id="summary-list" class="space-y-4">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl">&times;</button>
+            <h3 class="text-4xl font-bold mb-8">สรุปรายการสั่งซื้อ</h3>
+            <div id="summary-list" class="space-y-6">
                 <!-- Summary items will be added here -->
             </div>
-            <div class="mt-8 pt-4 border-t border-gray-200">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-lg font-semibold">ยอดรวมค่าอาหาร:</span>
-                    <span id="summary-food-total" class="text-lg font-semibold">0 บาท</span>
+            <div class="mt-10 pt-6 border-t border-gray-200">
+                <div class="flex justify-between items-center mb-4 text-2xl">
+                    <span class="font-semibold">ยอดรวมค่าอาหาร:</span>
+                    <span id="summary-food-total" class="font-semibold">0 บาท</span>
                 </div>
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-lg font-semibold">ค่าจัดส่ง:</span>
-                    <span id="delivery-fee" class="text-lg font-semibold text-gray-500">กรุณากดขอ Location</span>
+                <div class="flex justify-between items-center mb-6 text-2xl">
+                    <span class="font-semibold">ค่าจัดส่ง:</span>
+                    <span id="delivery-fee" class="font-semibold text-gray-500">กรุณากดขอ Location</span>
                 </div>
-                <div class="flex justify-between items-center font-bold text-xl text-blue-900">
+                <div class="flex justify-between items-center font-bold text-3xl text-blue-900">
                     <span>รวมยอดที่ต้องชำระ:</span>
                     <span id="final-total">0 บาท</span>
                 </div>
             </div>
-            <button id="get-location-btn" class="w-full btn btn-primary mt-6">📍 ขอ Location และคำนวณค่าส่ง</button>
-            <button id="proceed-to-checkout-btn" class="w-full btn btn-primary mt-4 hidden">กรอกข้อมูลการจัดส่ง</button>
+            <button id="get-location-btn" class="w-full btn btn-primary mt-8 py-4 text-2xl">📍 ขอ Location และคำนวณค่าส่ง</button>
+            <button id="proceed-to-checkout-btn" class="w-full btn btn-primary mt-4 py-4 text-2xl hidden">กรอกข้อมูลการจัดส่ง</button>
         </div>
     </div>
 
     <!-- Checkout Modal -->
     <div id="checkout-modal" class="summary-modal">
         <div class="modal-content">
-             <button id="close-checkout-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-            <h3 class="text-2xl font-bold mb-4">ข้อมูลการจัดส่ง</h3>
-            <form id="checkout-form" class="space-y-4">
+             <button id="close-checkout-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl">&times;</button>
+            <h3 class="text-4xl font-bold mb-6">ข้อมูลการจัดส่ง</h3>
+            <form id="checkout-form" class="space-y-6">
                 <div>
-                    <label for="nickname" class="block text-sm font-medium text-gray-700">ชื่อเล่น:</label>
-                    <input type="text" id="nickname" name="nickname" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" required>
+                    <label for="nickname" class="block text-xl font-medium text-gray-700">ชื่อเล่น:</label>
+                    <input type="text" id="nickname" name="nickname" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-xl" required>
                 </div>
                 <div>
-                    <label for="phone" class="block text-sm font-medium text-gray-700">เบอร์โทรศัพท์:</label>
-                    <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" required>
+                    <label for="phone" class="block text-xl font-medium text-gray-700">เบอร์โทรศัพท์:</label>
+                    <input type="tel" id="phone" name="phone" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-xl" required>
                 </div>
                 <div>
-                    <label for="address" class="block text-sm font-medium text-gray-700">ที่อยู่จัดส่ง (จุดสังเกต):</label>
-                    <textarea id="address" name="address" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" required></textarea>
+                    <label for="address" class="block text-xl font-medium text-gray-700">ที่อยู่จัดส่ง (จุดสังเกต):</label>
+                    <textarea id="address" name="address" rows="3" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-xl" required></textarea>
                 </div>
-                <button type="submit" class="w-full btn btn-primary">ยืนยันการสั่งอาหาร</button>
+                <button type="submit" class="w-full btn btn-primary py-4 text-2xl">ยืนยันการสั่งอาหาร</button>
             </form>
         </div>
     </div>
@@ -179,14 +183,14 @@
     <!-- Thank You Modal -->
     <div id="thankyou-modal" class="summary-modal">
         <div class="modal-content text-center">
-            <h3 class="text-3xl font-bold text-green-600 mb-4">🙏 ขอบคุณครับ!</h3>
-            <p class="text-lg mb-4">ทางร้านได้รับออเดอร์แล้ว</p>
-            <p class="text-sm text-gray-500 mb-6">กรุณารอรับการติดต่อจากทางร้านนะครับ</p>
-            <div class="bg-yellow-100 p-4 rounded-lg border border-yellow-300">
-                <p class="font-bold text-lg text-red-600">คำแนะนำการชำระเงิน</p>
-                <p class="mt-2">ลูกค้ารับอาหารแล้วค่อยสแกนจ่ายด้วย QR Code ในถุงอาหาร <span class="font-bold text-red-600">**ไม่ต้อง**</span> จ่ายเงินให้ไรเดอร์ (ทางร้านสำรองจ่ายไปก่อนแล้วครับ)</p>
+            <h3 class="text-5xl font-bold text-green-600 mb-6">🙏 ขอบคุณครับ!</h3>
+            <p class="text-3xl mb-6">ทางร้านได้รับออเดอร์แล้ว</p>
+            <p class="text-xl text-gray-500 mb-8">กรุณารอรับการติดต่อจากทางร้านนะครับ</p>
+            <div class="bg-yellow-100 p-6 rounded-lg border border-yellow-300">
+                <p class="font-bold text-3xl text-red-600">คำแนะนำการชำระเงิน</p>
+                <p class="mt-4 text-xl">ลูกค้ารับอาหารแล้วค่อยสแกนจ่ายด้วย QR Code ในถุงอาหาร <span class="font-bold text-red-600">**ไม่ต้อง**</span> จ่ายเงินให้ไรเดอร์ (ทางร้านสำรองจ่ายไปก่อนแล้วครับ)</p>
             </div>
-             <button onclick="location.reload()" class="w-full btn btn-primary mt-6">กลับไปที่หน้าเมนู</button>
+             <button onclick="location.reload()" class="w-full btn btn-primary mt-8 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
         </div>
     </div>
 
@@ -275,7 +279,7 @@
                 }
 
                 const card = document.createElement('div');
-                card.className = 'menu-card p-4';
+                card.className = 'menu-card p-6';
                 
                 const isSimpleItem = item.options.length === 1 && item.options[0].key === 'default';
                 let optionsHTML = '';
@@ -285,24 +289,24 @@
                     const option = item.options[0];
                     optionsHTML = `
                         <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold text-blue-900">${option.price} บาท</span>
-                            <div class="flex items-center gap-2">
-                                <button class="btn btn-secondary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
-                                <span id="${item.id}-${option.key}-qty" class="qty-display w-8 text-center text-lg font-bold">0</span>
-                                <button class="btn btn-primary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
+                            <span class="text-4xl font-bold text-blue-900">${option.price} บาท</span>
+                            <div class="flex items-center gap-4">
+                                <button class="btn btn-secondary text-3xl p-2 w-12 h-12 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
+                                <span id="${item.id}-${option.key}-qty" class="qty-display w-12 text-center text-3xl font-bold">0</span>
+                                <button class="btn btn-primary text-3xl p-2 w-12 h-12 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
                             </div>
                         </div>
                     `;
                 } else {
                     // RENDER FOR MULTI-OPTION ITEM
                     optionsHTML = item.options.map(option => `
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center text-2xl">
                             <span class="text-gray-800">${option.label}</span>
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-4">
                                 <span class="text-gray-600 font-semibold">${option.price} บ.</span>
-                                <button class="btn btn-secondary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
-                                <span id="${item.id}-${option.key}-qty" class="qty-display w-8 text-center text-lg font-bold">0</span>
-                                <button class="btn btn-primary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
+                                <button class="btn btn-secondary text-3xl p-2 w-12 h-12 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
+                                <span id="${item.id}-${option.key}-qty" class="qty-display w-12 text-center text-3xl font-bold">0</span>
+                                <button class="btn btn-primary text-3xl p-2 w-12 h-12 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
                             </div>
                         </div>
                     `).join('');
@@ -310,15 +314,15 @@
 
                 card.innerHTML = `
                     <div class="flex-grow">
-                        <img src="${item.image}" alt="${item.name}" class="rounded-lg mb-4 w-full h-48 object-cover">
-                        <h3 class="text-xl font-bold mb-3">${item.name}</h3>
-                        <div class="options space-y-2">
+                        <img src="${item.image}" alt="${item.name}" class="rounded-lg mb-6 w-full h-64 object-cover">
+                        <h3 class="text-4xl font-bold mb-5">${item.name}</h3>
+                        <div class="options space-y-4">
                             ${optionsHTML}
                         </div>
                     </div>
-                    <div class="mt-4 pt-4 border-t">
-                        <label for="${item.id}-note" class="block text-sm font-medium text-gray-700">คำสั่งพิเศษ (ถ้ามี):</label>
-                        <input type="text" id="${item.id}-note" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 text-sm" placeholder="เช่น ไม่เอาผัก, เพิ่มไข่ดาว...">
+                    <div class="mt-6 pt-6 border-t">
+                        <label for="${item.id}-note" class="block text-xl font-medium text-gray-700">คำสั่งพิเศษ (ถ้ามี):</label>
+                        <input type="text" id="${item.id}-note" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm p-4 text-xl" placeholder="เช่น ไม่เอาผัก, เพิ่มไข่ดาว...">
                     </div>
                 `;
                 menuList.appendChild(card);
@@ -377,10 +381,10 @@
                 const displayName = item.optionLabel ? `${item.name} (${item.optionLabel})` : item.name;
 
                 summaryList.innerHTML += `
-                    <div class="flex justify-between items-start bg-gray-50 p-3 rounded-lg">
+                    <div class="flex justify-between items-start bg-gray-50 p-4 rounded-lg text-xl">
                         <div>
                             <p class="font-semibold">${displayName} x ${item.quantity}</p>
-                            ${item.note ? `<p class="text-xs text-blue-600 italic">พิเศษ: ${item.note}</p>` : ''}
+                            ${item.note ? `<p class="text-lg text-blue-600 italic">พิเศษ: ${item.note}</p>` : ''}
                         </div>
                         <span class="font-bold whitespace-nowrap">${item.price * item.quantity} บาท</span>
                     </div>`;
