@@ -98,7 +98,7 @@
             background-size: 200px 200px;
         }
 
-        /* == Responsive Fix for LINE Browser & Mobile == */
+        /* == Responsive Fix for Mobile == */
         @media (max-width: 768px) {
             body {
                 font-size: 16px; /* Reset base font size for mobile */
@@ -138,7 +138,6 @@
             }
             .menu-card .text-4xl { font-size: 1.5rem; } /* Price */
             .menu-card .text-2xl { font-size: 1.5rem; } /* Option Label Container */
-            /* UPDATED: Make the option label text bold on mobile */
             .menu-card .text-2xl .text-gray-800 {
                 font-weight: 700;
             }
@@ -157,7 +156,12 @@
             .modal-content .text-xl, .modal-content .text-2xl, .modal-content .text-3xl, .modal-content .text-4xl, .modal-content .text-5xl {
                 font-size: 1.125rem;
             }
-             .modal-content .font-bold.text-3xl.text-red-600 { font-size: 1.25rem; }
+            .modal-content .font-bold.text-3xl.text-red-600 { font-size: 1.25rem; }
+
+            /* == Specific Fix for LINE Browser font scaling issue == */
+            .is-line-browser .menu-card .text-2xl {
+                font-size: 1rem; /* Reduce font size for the entire option row in LINE */
+            }
         }
 
     </style>
@@ -266,6 +270,11 @@
 
 
     <script>
+        // Detect if running in LINE's in-app browser and add a class to the body
+        if (navigator.userAgent.toLowerCase().includes('line/')) {
+            document.body.classList.add('is-line-browser');
+        }
+
         // !!! IMPORTANT !!!
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzDt0gvMPJUztj_4yQ6Ygb8c3G0aSSB9zE9oJZ2OJiqzcvHbtuy7ckLqvBErBJn5rxA/exec";
 
