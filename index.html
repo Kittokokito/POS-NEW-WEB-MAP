@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ป.ขาหมู: สั่งขาหมู ส่งถึงบ้าน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #f7f7f7;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        .menu-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        .btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .btn-primary {
+            background-color: #1e3a8a; /* Darker Blue */
+            color: white;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: #1c3473;
+        }
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+        .floating-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #111827;
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .summary-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-blue-900 text-white py-4 px-6 shadow-lg sticky top-0 z-50">
+        <div class="container flex items-center justify-between">
+            <div class="flex items-center">
+                <img src="https://drive.google.com/uc?export=view&id=18SWBkmI6labwU_TtzgmytZAVr1BrhdGc" alt="P.Pork Leg Logo" class="rounded-full w-12 h-12 mr-4 bg-white p-1">
+                <div>
+                    <h1 class="text-2xl font-bold">ป.ขาหมู</h1>
+                    <p class="text-sm mt-1">สั่งอาหารเดลิเวอรี่ ราคาเท่าหน้าร้าน ค่าส่งตามจริง</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-end">
+                <span class="text-sm font-semibold">โทร: 086-262-4788</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content - Menu Page -->
+    <main class="container py-8" id="menu-page">
+        <h2 class="text-3xl font-bold text-center mb-8">เมนูอาหาร</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="menu-list">
+            <!-- Loading indicator -->
+            <p class="text-center col-span-full text-gray-500">กำลังโหลดเมนูอาหาร...</p>
+        </div>
+    </main>
+
+    <!-- Floating Footer -->
+    <div id="footer" class="floating-footer flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <span class="text-lg">รวม:</span>
+            <span id="total-price" class="text-2xl font-bold">0 บาท</span>
+        </div>
+        <button id="view-summary-btn" class="btn btn-primary">ดูสรุปรายการ</button>
+    </div>
+
+    <!-- Summary Modal -->
+    <div id="summary-modal" class="summary-modal">
+        <div class="modal-content">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            <h3 class="text-2xl font-bold mb-6">สรุปรายการสั่งซื้อ</h3>
+            <div id="summary-list" class="space-y-4">
+                <!-- Summary items will be added here -->
+            </div>
+            <div class="mt-8 pt-4 border-t border-gray-200">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-lg font-semibold">ยอดรวมค่าอาหาร:</span>
+                    <span id="summary-food-total" class="text-lg font-semibold">0 บาท</span>
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-semibold">ค่าจัดส่ง:</span>
+                    <span id="delivery-fee" class="text-lg font-semibold text-gray-500">กรุณากดขอ Location</span>
+                </div>
+                <div class="flex justify-between items-center font-bold text-xl text-blue-900">
+                    <span>รวมยอดที่ต้องชำระ:</span>
+                    <span id="final-total">0 บาท</span>
+                </div>
+            </div>
+            <button id="get-location-btn" class="w-full btn btn-primary mt-6">📍 ขอ Location และคำนวณค่าส่ง</button>
+            <button id="proceed-to-checkout-btn" class="w-full btn btn-primary mt-4 hidden">กรอกข้อมูลการจัดส่ง</button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="summary-modal">
+        <div class="modal-content">
+             <button id="close-checkout-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            <h3 class="text-2xl font-bold mb-4">ข้อมูลการจัดส่ง</h3>
+            <form id="checkout-form" class="space-y-4">
+                <div>
+                    <label for="nickname" class="block text-sm font-medium text-gray-700">ชื่อเล่น:</label>
+                    <input type="text" id="nickname" name="nickname" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" required>
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700">เบอร์โทรศัพท์:</label>
+                    <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" required>
+                </div>
+                <div>
+                    <label for="address" class="block text-sm font-medium text-gray-700">ที่อยู่จัดส่ง (จุดสังเกต):</label>
+                    <textarea id="address" name="address" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" required></textarea>
+                </div>
+                <button type="submit" class="w-full btn btn-primary">ยืนยันการสั่งอาหาร</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Thank You Modal -->
+    <div id="thankyou-modal" class="summary-modal">
+        <div class="modal-content text-center">
+            <h3 class="text-3xl font-bold text-green-600 mb-4">🙏 ขอบคุณครับ!</h3>
+            <p class="text-lg mb-4">ทางร้านได้รับออเดอร์แล้ว</p>
+            <p class="text-sm text-gray-500 mb-6">กรุณารอรับการติดต่อจากทางร้านนะครับ</p>
+            <div class="bg-yellow-100 p-4 rounded-lg border border-yellow-300">
+                <p class="font-bold text-lg text-red-600">คำแนะนำการชำระเงิน</p>
+                <p class="mt-2">ลูกค้ารับอาหารแล้วค่อยสแกนจ่ายด้วย QR Code ในถุงอาหาร <span class="font-bold text-red-600">**ไม่ต้อง**</span> จ่ายเงินให้ไรเดอร์ (ทางร้านสำรองจ่ายไปก่อนแล้วครับ)</p>
+            </div>
+             <button onclick="location.reload()" class="w-full btn btn-primary mt-6">กลับไปที่หน้าเมนู</button>
+        </div>
+    </div>
+
+
+    <script>
+        // !!! IMPORTANT !!!
+        // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzDt0gvMPJUztj_4yQ6Ygb8c3G0aSSB9zE9oJZ2OJiqzcvHbtuy7ckLqvBErBJn5rxA/exec";
+
+        let menuItems = [];
+        let cart = [];
+        let userLocation = null;
+        let deliveryCost = 0;
+
+        // Element references
+        const menuList = document.getElementById('menu-list');
+        const totalPriceEl = document.getElementById('total-price');
+        const footer = document.getElementById('footer');
+        const summaryModal = document.getElementById('summary-modal');
+        const checkoutModal = document.getElementById('checkout-modal');
+        const thankYouModal = document.getElementById('thankyou-modal');
+        const summaryList = document.getElementById('summary-list');
+        const summaryFoodTotalEl = document.getElementById('summary-food-total');
+        const deliveryFeeEl = document.getElementById('delivery-fee');
+        const finalTotalEl = document.getElementById('final-total');
+        const getLocationBtn = document.getElementById('get-location-btn');
+        const proceedToCheckoutBtn = document.getElementById('proceed-to-checkout-btn');
+
+        // Fetch menu from Google Apps Script
+        async function fetchMenu() {
+            try {
+                const response = await fetch(GAS_URL); // GET request to doGet
+                if (!response.ok) throw new Error('Network response was not ok');
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    menuItems = result.data.map(item => ({
+                        id: item.ItemID,
+                        name: item.Name,
+                        image: item.ImageURL || `https://placehold.co/400x300/e5e7eb/555?text=${encodeURIComponent(item.Name)}`,
+                        options: item.Options.split(',').map(opt => {
+                            const [label, priceStr] = opt.split(':');
+                            return { label: label.trim(), price: parseInt(priceStr.trim(), 10), key: label.trim() };
+                        })
+                    }));
+                    renderMenuItems();
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                menuList.innerHTML = `<p class="text-center col-span-full text-red-500">ไม่สามารถโหลดเมนูได้: ${error.message}</p>`;
+            }
+        }
+
+        // Render menu items
+        function renderMenuItems() {
+            menuList.innerHTML = '';
+            menuItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'menu-card p-4';
+                card.innerHTML = `
+                    <div class="flex-grow">
+                        <img src="${item.image}" alt="${item.name}" class="rounded-lg mb-4 w-full h-48 object-cover">
+                        <h3 class="text-xl font-bold mb-3">${item.name}</h3>
+                        <div class="options space-y-2">
+                            ${item.options.map(option => `
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-800">${option.label}</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-gray-600 font-semibold">${option.price} บ.</span>
+                                        <button class="btn btn-secondary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
+                                        <span id="${item.id}-${option.key}-qty" class="qty-display w-8 text-center text-lg font-bold">0</span>
+                                        <button class="btn btn-primary text-lg p-1 w-8 h-8 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t">
+                        <label for="${item.id}-note" class="block text-sm font-medium text-gray-700">คำสั่งพิเศษ (ถ้ามี):</label>
+                        <input type="text" id="${item.id}-note" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 text-sm" placeholder="เช่น ไม่เอาผัก, เพิ่มไข่ดาว...">
+                    </div>
+                `;
+                menuList.appendChild(card);
+            });
+        }
+
+        // Update quantity in cart
+        window.updateQuantity = (itemId, optionKey, change) => {
+            const menuItem = menuItems.find(i => i.id === itemId);
+            const option = menuItem.options.find(o => o.key === optionKey);
+            let cartItem = cart.find(i => i.id === itemId && i.optionKey === optionKey);
+
+            if (!cartItem && change > 0) {
+                cartItem = { id: itemId, name: menuItem.name, optionLabel: option.label, optionKey: optionKey, price: option.price, quantity: 0, note: '' };
+                cart.push(cartItem);
+            }
+            
+            if (cartItem) {
+                cartItem.quantity += change;
+                if (cartItem.quantity <= 0) {
+                    cart = cart.filter(i => i !== cartItem);
+                }
+            }
+            
+            document.getElementById(`${itemId}-${optionKey}-qty`).innerText = cartItem ? cartItem.quantity : 0;
+            updateFooter();
+        }
+
+        // Update floating footer
+        function updateFooter() {
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            totalPriceEl.innerText = `${totalPrice} บาท`;
+            footer.style.display = totalPrice > 0 ? 'flex' : 'none';
+        }
+
+        // Event Listeners for Modals
+        document.getElementById('view-summary-btn').addEventListener('click', () => {
+            if (cart.length === 0) return;
+            updateSummaryModal();
+            summaryModal.style.display = 'flex';
+        });
+
+        document.getElementById('close-modal-btn').addEventListener('click', () => summaryModal.style.display = 'none');
+        document.getElementById('close-checkout-modal-btn').addEventListener('click', () => checkoutModal.style.display = 'none');
+
+        function updateSummaryModal() {
+            summaryList.innerHTML = '';
+            let foodTotal = 0;
+            cart.forEach(item => {
+                const noteInput = document.getElementById(`${item.id}-note`);
+                item.note = noteInput ? noteInput.value.trim() : '';
+                
+                summaryList.innerHTML += `
+                    <div class="flex justify-between items-start bg-gray-50 p-3 rounded-lg">
+                        <div>
+                            <p class="font-semibold">${item.name} (${item.optionLabel}) x ${item.quantity}</p>
+                            ${item.note ? `<p class="text-xs text-blue-600 italic">พิเศษ: ${item.note}</p>` : ''}
+                        </div>
+                        <span class="font-bold whitespace-nowrap">${item.price * item.quantity} บาท</span>
+                    </div>`;
+                foodTotal += item.price * item.quantity;
+            });
+
+            summaryFoodTotalEl.innerText = `${foodTotal} บาท`;
+            deliveryFeeEl.innerText = 'กรุณากดขอ Location';
+            finalTotalEl.innerText = `${foodTotal} บาท`;
+            proceedToCheckoutBtn.classList.add('hidden');
+            getLocationBtn.classList.remove('hidden');
+        }
+
+        // Get Location and Calculate Fee
+        getLocationBtn.addEventListener('click', () => {
+            deliveryFeeEl.innerText = 'กำลังค้นหาตำแหน่ง...';
+            getLocationBtn.disabled = true;
+
+            if (!navigator.geolocation) {
+                deliveryFeeEl.innerText = 'เบราว์เซอร์ไม่รองรับ';
+                getLocationBtn.disabled = false;
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                userLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude };
+                deliveryFeeEl.innerText = 'กำลังคำนวณค่าส่ง...';
+
+                try {
+                    const response = await fetch(GAS_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({ action: 'calculateFee', lat: userLocation.latitude, lng: userLocation.longitude })
+                    });
+                    const result = await response.json();
+                    if (result.status === 'success') {
+                        deliveryCost = result.fee;
+                        const foodTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                        deliveryFeeEl.innerText = `${deliveryCost} บาท (ระยะทาง ~${result.distance} กม.)`;
+                        finalTotalEl.innerText = `${foodTotal + deliveryCost} บาท`;
+                        proceedToCheckoutBtn.classList.remove('hidden');
+                        getLocationBtn.classList.add('hidden');
+                    } else {
+                        throw new Error(result.message);
+                    }
+                } catch (error) {
+                    deliveryFeeEl.innerText = `คำนวณผิดพลาด`;
+                    alert(`เกิดข้อผิดพลาดในการคำนวณค่าส่ง: ${error.message}`);
+                } finally {
+                    getLocationBtn.disabled = false;
+                }
+            }, (error) => {
+                deliveryFeeEl.innerText = 'ไม่สามารถเข้าถึงตำแหน่งได้';
+                alert('กรุณาอนุญาตให้เข้าถึงตำแหน่งเพื่อคำนวณค่าส่ง');
+                getLocationBtn.disabled = false;
+            });
+        });
+
+        // Proceed to Checkout
+        proceedToCheckoutBtn.addEventListener('click', () => {
+            summaryModal.style.display = 'none';
+            checkoutModal.style.display = 'flex';
+        });
+
+        // Handle Checkout Form Submission
+        document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'กำลังส่งออเดอร์...';
+
+            const foodTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const orderDetails = cart.map(item => {
+                let detail = `${item.name} (${item.optionLabel}) x${item.quantity}`;
+                if (item.note) detail += ` [${item.note}]`;
+                return detail;
+            }).join(', ');
+
+            const payload = {
+                name: document.getElementById('nickname').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                latitude: userLocation.latitude,
+                longitude: userLocation.longitude,
+                orderDetails: orderDetails,
+                totalPrice: foodTotal,
+                deliveryFee: deliveryCost,
+            };
+
+            try {
+                const response = await fetch(GAS_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.status === 'success') {
+                    checkoutModal.style.display = 'none';
+                    thankYouModal.style.display = 'flex';
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                alert(`เกิดข้อผิดพลาดในการส่งออเดอร์: ${error.message}`);
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'ยืนยันการสั่งอาหาร';
+            }
+        });
+
+        // Initial fetch
+        fetchMenu();
+    </script>
+
+</body>
+</html>
+
