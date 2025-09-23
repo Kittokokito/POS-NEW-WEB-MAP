@@ -55,17 +55,16 @@
         .btn-secondary:hover {
             background-color: #d1d5db;
         }
-        /* UPDATED: Decline button style */
+        /* NEW: Decline button style */
         .btn-decline {
-            background-color: #fee2e2;
-            border: 1px solid #fca5a5;
-            color: #b91c1c;
+            background-color: transparent;
+            color: #dc2626; /* Red */
             font-size: 1rem;
             padding: 0.5rem 1rem;
             margin-top: 0.5rem;
         }
         .btn-decline:hover {
-            background-color: #fecaca;
+            background-color: #fee2e2;
         }
 
         .floating-footer {
@@ -275,7 +274,7 @@
     <div id="checkout-modal" class="summary-modal">
         <div class="modal-content">
              <button id="close-checkout-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl">&times;</button>
-            <h3 class="text-4xl font-bold mb-6">ให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่งอาหาร</h3>
+            <h3 class="text-4xl font-bold mb-6">ข้อมูลการจัดส่ง</h3>
             <form id="checkout-form" class="space-y-6">
                 <div>
                     <label for="nickname" class="block text-xl font-medium text-gray-700">ชื่อเล่น:</label>
@@ -289,11 +288,7 @@
                     <label for="address" class="block text-xl font-medium text-gray-700">ที่อยู่จัดส่ง (จุดสังเกต):</label>
                     <textarea id="address" name="address" rows="3" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-4 text-xl" required></textarea>
                 </div>
-                <div class="text-center space-y-2 pt-4">
-                    <button type="submit" class="w-full btn btn-primary py-4 text-2xl">ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง</button>
-                    <button type="button" id="decline-info-btn" class="btn btn-decline">ไม่ให้ข้อมูล</button>
-                    <button type="button" id="cancel-order-btn" class="btn btn-decline">ยกเลิก</button>
-                </div>
+                <button type="submit" class="w-full btn btn-primary py-4 text-2xl">ยืนยันการสั่งอาหาร</button>
             </form>
         </div>
     </div>
@@ -332,8 +327,8 @@
     <!-- NEW: Cannot Deliver Modal -->
     <div id="cannot-deliver-modal" class="summary-modal">
         <div class="modal-content text-center">
-            <h3 class="text-4xl font-bold text-red-600 mb-4">ไม่สามารถดำเนินการต่อได้</h3>
-            <p class="text-xl text-gray-700 mb-8">ทางร้านต้องขออภัยในความไม่สะดวกที่ไม่สามารถให้บริการได้ หากไม่ได้รับข้อมูลที่จำเป็น</p>
+            <h3 class="text-4xl font-bold text-red-600 mb-4">ไม่สามารถจัดส่งได้</h3>
+            <p class="text-xl text-gray-700 mb-8">ทางร้านต้องขออภัยที่ไม่สามารถจัดส่งอาหารให้ได้ หากไม่ได้รับตำแหน่งของท่าน</p>
             <p class="text-2xl font-semibold mb-6">ขอบคุณที่ให้ความสนใจครับ 🙏</p>
             <button onclick="location.reload()" class="w-full btn btn-primary mt-4 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
         </div>
@@ -396,8 +391,6 @@
         const getLocationBtn = document.getElementById('get-location-btn');
         const proceedToCheckoutBtn = document.getElementById('proceed-to-checkout-btn');
         const declineLocationBtn = document.getElementById('decline-location-btn');
-        const declineInfoBtn = document.getElementById('decline-info-btn');
-        const cancelOrderBtn = document.getElementById('cancel-order-btn');
         
         // NEW: Function to fetch shop configuration from external file
         async function fetchShopConfig() {
@@ -659,16 +652,6 @@
         // NEW: Event listener for decline button
         declineLocationBtn.addEventListener('click', () => {
             summaryModal.style.display = 'none';
-            cannotDeliverModal.style.display = 'flex';
-        });
-
-        declineInfoBtn.addEventListener('click', () => {
-            checkoutModal.style.display = 'none';
-            cannotDeliverModal.style.display = 'flex';
-        });
-
-        cancelOrderBtn.addEventListener('click', () => {
-            checkoutModal.style.display = 'none';
             cannotDeliverModal.style.display = 'flex';
         });
 
