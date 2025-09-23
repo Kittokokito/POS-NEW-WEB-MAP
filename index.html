@@ -263,11 +263,14 @@
                     <span id="final-total">0 บาท</span>
                 </div>
             </div>
-            <div class="mt-8 text-center">
+            <div id="location-actions" class="mt-8 text-center">
                 <button id="get-location-btn" class="w-full btn btn-primary py-4 text-2xl">📍 กดปักหมุดอนุญาตให้ตำแหน่ง เพื่อจัดส่งอาหารและคำนวณค่าส่ง</button>
                 <button id="decline-location-btn" class="btn btn-decline">ไม่อนุญาตให้ตำแหน่ง</button>
             </div>
-            <button id="proceed-to-checkout-btn" class="w-full btn btn-primary mt-4 py-4 text-2xl hidden">กรอกข้อมูลการจัดส่ง</button>
+            <div id="checkout-actions" class="mt-4 text-center hidden">
+                <button id="proceed-to-checkout-btn" class="w-full btn btn-primary py-4 text-2xl">ให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่งอาหาร</button>
+                <button id="decline-info-btn" class="btn btn-decline">ไม่ให้ข้อมูล</button>
+            </div>
         </div>
     </div>
 
@@ -275,7 +278,7 @@
     <div id="checkout-modal" class="summary-modal">
         <div class="modal-content">
              <button id="close-checkout-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl">&times;</button>
-            <h3 class="text-4xl font-bold mb-6">ให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่งอาหาร</h3>
+            <h3 class="text-4xl font-bold mb-6">ข้อมูลการจัดส่ง</h3>
             <form id="checkout-form" class="space-y-6">
                 <div>
                     <label for="nickname" class="block text-xl font-medium text-gray-700">ชื่อเล่น:</label>
@@ -291,7 +294,6 @@
                 </div>
                 <div class="text-center space-y-2 pt-4">
                     <button type="submit" class="w-full btn btn-primary py-4 text-2xl">ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง</button>
-                    <button type="button" id="decline-info-btn" class="btn btn-decline">ไม่ให้ข้อมูล</button>
                     <button type="button" id="cancel-order-btn" class="btn btn-decline">ยกเลิก</button>
                 </div>
             </form>
@@ -305,7 +307,6 @@
             <p class="text-3xl mb-6">ทางร้านได้รับออเดอร์แล้ว</p>
             <p class="text-xl text-gray-500 mb-8">กรุณารอรับการติดต่อจากทางร้านนะครับ</p>
 
-            <!-- UPDATED: Added Order Summary to Thank You Modal -->
             <div class="my-8 text-left border-t border-b border-gray-200 py-6 space-y-3">
                 <div class="flex justify-between items-center text-xl">
                     <span class="text-gray-600">ยอดรวมค่าอาหาร:</span>
@@ -342,7 +343,6 @@
 
     <script>
         // --- การตั้งค่า (Configuration) ---
-        // ใส่ลิงก์ "Raw" ของไฟล์ config.json ที่คุณสร้างไว้ใน GitHub ที่นี่
         const CONFIG_URL = "https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/config.json";
         // ----------------------------------
 
@@ -393,6 +393,10 @@
         const summaryFoodTotalEl = document.getElementById('summary-food-total');
         const deliveryFeeEl = document.getElementById('delivery-fee');
         const finalTotalEl = document.getElementById('final-total');
+        
+        const locationActions = document.getElementById('location-actions');
+        const checkoutActions = document.getElementById('checkout-actions');
+        
         const getLocationBtn = document.getElementById('get-location-btn');
         const proceedToCheckoutBtn = document.getElementById('proceed-to-checkout-btn');
         const declineLocationBtn = document.getElementById('decline-location-btn');
@@ -609,17 +613,19 @@
             summaryFoodTotalEl.innerText = `${foodTotal} บาท`;
             deliveryFeeEl.innerText = 'กรุณากดขอ Location';
             finalTotalEl.innerText = `${foodTotal} บาท`;
-            proceedToCheckoutBtn.classList.add('hidden');
-            document.getElementById('get-location-btn').parentElement.classList.remove('hidden');
+            checkoutActions.classList.add('hidden');
+            locationActions.classList.remove('hidden');
         }
 
         getLocationBtn.addEventListener('click', () => {
             deliveryFeeEl.innerText = 'กำลังค้นหาตำแหน่ง...';
             getLocationBtn.disabled = true;
+            declineLocationBtn.disabled = true;
 
             if (!navigator.geolocation) {
                 deliveryFeeEl.innerText = 'เบราว์เซอร์ไม่รองรับ';
                 getLocationBtn.disabled = false;
+                declineLocationBtn.disabled = false;
                 return;
             }
 
@@ -638,8 +644,8 @@
                         const foodTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
                         deliveryFeeEl.innerText = `${deliveryCost} บาท (ระยะทาง ~${result.distance} กม.)`;
                         finalTotalEl.innerText = `${foodTotal + deliveryCost} บาท`;
-                        proceedToCheckoutBtn.classList.remove('hidden');
-                        document.getElementById('get-location-btn').parentElement.classList.add('hidden');
+                        checkoutActions.classList.remove('hidden');
+                        locationActions.classList.add('hidden');
                     } else {
                         throw new Error(result.message);
                     }
@@ -648,11 +654,13 @@
                     alert(`เกิดข้อผิดพลาดในการคำนวณค่าส่ง: ${error.message}`);
                 } finally {
                     getLocationBtn.disabled = false;
+                    declineLocationBtn.disabled = false;
                 }
             }, (error) => {
                 deliveryFeeEl.innerText = 'ไม่สามารถเข้าถึงตำแหน่งได้';
                 alert('กรุณาอนุญาตให้เข้าถึงตำแหน่งเพื่อคำนวณค่าส่ง');
                 getLocationBtn.disabled = false;
+                declineLocationBtn.disabled = false;
             });
         });
 
@@ -663,7 +671,7 @@
         });
 
         declineInfoBtn.addEventListener('click', () => {
-            checkoutModal.style.display = 'none';
+            summaryModal.style.display = 'none';
             cannotDeliverModal.style.display = 'flex';
         });
 
