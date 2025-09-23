@@ -279,20 +279,20 @@
         <div class="modal-content">
              <button id="close-checkout-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl">&times;</button>
             <h3 class="text-4xl font-bold mb-6">ข้อมูลการจัดส่ง</h3>
-            <form id="checkout-form" class="space-y-6">
+            <form id="checkout-form" class="space-y-4">
                 <div>
-                    <label for="nickname" class="block text-xl font-medium text-gray-700">ชื่อเล่น:</label>
-                    <input type="text" id="nickname" name="nickname" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-4 text-xl" required>
+                    <label for="nickname" class="block text-lg font-medium text-gray-700">ชื่อเล่น:</label>
+                    <input type="text" id="nickname" name="nickname" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required>
                 </div>
                 <div>
-                    <label for="phone" class="block text-xl font-medium text-gray-700">เบอร์โทรศัพท์:</label>
-                    <input type="tel" id="phone" name="phone" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-4 text-xl" required>
+                    <label for="phone" class="block text-lg font-medium text-gray-700">เบอร์โทรศัพท์:</label>
+                    <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required>
                 </div>
                 <div>
-                    <label for="address" class="block text-xl font-medium text-gray-700">ที่อยู่จัดส่ง (จุดสังเกต):</label>
-                    <textarea id="address" name="address" rows="3" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-4 text-xl" required></textarea>
+                    <label for="address" class="block text-lg font-medium text-gray-700">ที่อยู่จัดส่ง (จุดสังเกต):</label>
+                    <textarea id="address" name="address" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required></textarea>
                 </div>
-                <div class="text-center space-y-2 pt-4">
+                <div class="text-center space-y-2 pt-2">
                     <button type="submit" class="w-full btn btn-primary py-4 text-2xl">ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง</button>
                     <button type="button" id="cancel-order-btn" class="btn btn-decline">ยกเลิก</button>
                 </div>
@@ -334,7 +334,6 @@
     <div id="cannot-deliver-modal" class="summary-modal">
         <div class="modal-content text-center">
             <h3 class="text-4xl font-bold text-red-600 mb-4">ไม่สามารถดำเนินการต่อได้</h3>
-            <p class="text-xl text-gray-700 mb-8">ทางร้านต้องขออภัยในความไม่สะดวกที่ไม่สามารถให้บริการได้ หากไม่ได้รับข้อมูลที่จำเป็น</p>
             <p class="text-2xl font-semibold mb-6">ขอบคุณที่ให้ความสนใจครับ 🙏</p>
             <button onclick="location.reload()" class="w-full btn btn-primary mt-4 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
         </div>
