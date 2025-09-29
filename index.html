@@ -736,13 +736,20 @@
             summaryModal.style.display = 'none';
             checkoutModal.style.display = 'flex';
             
+            const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
+            
             // Adjust checkout form for pickup/delivery
             if (orderType === 'pickup') {
                 addressGroup.style.display = 'none';
                 addressInput.required = false;
+                checkoutTitle.innerText = 'ให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน';
+                submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน';
+
             } else {
                 addressGroup.style.display = 'block';
                 addressInput.required = true;
+                checkoutTitle.innerText = 'ข้อมูลการจัดส่ง';
+                submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง';
             }
         });
 
@@ -793,7 +800,12 @@
             } catch (error) {
                 alert(`เกิดข้อผิดพลาดในการส่งออเดอร์: ${error.message}`);
                 submitBtn.disabled = false;
-                submitBtn.innerText = 'ยืนยันการสั่งอาหาร';
+                // Restore button text based on order type
+                 if (orderType === 'pickup') {
+                    submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน';
+                } else {
+                    submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง';
+                }
             }
         });
         
