@@ -1,12 +1,13 @@
 {
     "openingTime": "09:30",
-    "closingTime": "23:59",
+    "closingTime": "16:15",
     "closedDays": [],
     "specialHolidays": [
         "2025-12-25",
         "2026-01-01"
     ]
 }
+
 
 
 
