@@ -263,7 +263,7 @@
                 </div>
                 <div class="flex justify-between items-center mb-6 text-2xl">
                     <span class="font-semibold">ค่าจัดส่ง:</span>
-                    <span id="delivery-fee" class="font-semibold text-gray-500">กรุณากดขอ Location</span>
+                    <span id="delivery-fee" class="font-semibold text-gray-500">โปรดเลือกวิธีรับอาหาร</span>
                 </div>
                 <!-- -- Theme Color Update (Green) -- -->
                 <div class="flex justify-between items-center font-bold text-3xl text-green-800">
@@ -271,10 +271,18 @@
                     <span id="final-total">0 บาท</span>
                 </div>
             </div>
-            <div id="location-actions" class="mt-8 text-center">
+            
+            <!-- UPDATED: Delivery/Pickup Options -->
+            <div id="delivery-options" class="mt-8 grid grid-cols-2 gap-4">
+                <button id="pickup-btn" class="w-full btn btn-secondary py-4 text-xl">รับเองที่ร้าน</button>
+                <button id="delivery-btn" class="w-full btn btn-primary py-4 text-xl">จัดส่งเดลิเวอรี่</button>
+            </div>
+
+            <div id="location-actions" class="mt-8 text-center hidden">
                 <button id="get-location-btn" class="w-full btn btn-primary py-4 text-2xl">📍 กดปักหมุดอนุญาตให้ตำแหน่ง เพื่อจัดส่งอาหารและคำนวณค่าส่ง</button>
                 <button id="decline-location-btn" class="btn btn-decline">ไม่อนุญาตให้ตำแหน่ง</button>
             </div>
+            
             <div id="checkout-actions" class="mt-4 text-center hidden">
                 <button id="proceed-to-checkout-btn" class="w-full btn btn-primary py-4 text-2xl">ให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่งอาหาร</button>
                 <button id="decline-info-btn" class="btn btn-decline">ไม่ให้ข้อมูล</button>
@@ -286,7 +294,7 @@
     <div id="checkout-modal" class="summary-modal">
         <div class="modal-content">
              <button id="close-checkout-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl">&times;</button>
-            <h3 class="text-4xl font-bold mb-6">ข้อมูลการจัดส่ง</h3>
+            <h3 id="checkout-title" class="text-4xl font-bold mb-6">ข้อมูลการจัดส่ง</h3>
             <form id="checkout-form" class="space-y-4">
                 <div>
                     <label for="nickname" class="block text-lg font-medium text-gray-700">ชื่อเล่น:</label>
@@ -296,7 +304,7 @@
                     <label for="phone" class="block text-lg font-medium text-gray-700">เบอร์โทรศัพท์:</label>
                     <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required>
                 </div>
-                <div>
+                <div id="address-group">
                     <label for="address" class="block text-lg font-medium text-gray-700">ที่อยู่จัดส่ง จุดสังเกต:</label>
                     <textarea id="address" name="address" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required></textarea>
                 </div>
@@ -384,6 +392,7 @@
         let userLocation = null;
         let deliveryCost = 0;
         let isShopOpen = true; // Default to true, will be updated by config
+        let orderType = ''; // 'delivery' or 'pickup'
 
         // Element references
         const menuPage = document.getElementById('menu-page');
@@ -402,6 +411,10 @@
         const deliveryFeeEl = document.getElementById('delivery-fee');
         const finalTotalEl = document.getElementById('final-total');
         
+        const deliveryOptions = document.getElementById('delivery-options');
+        const pickupBtn = document.getElementById('pickup-btn');
+        const deliveryBtn = document.getElementById('delivery-btn');
+
         const locationActions = document.getElementById('location-actions');
         const checkoutActions = document.getElementById('checkout-actions');
         
@@ -410,6 +423,10 @@
         const declineLocationBtn = document.getElementById('decline-location-btn');
         const declineInfoBtn = document.getElementById('decline-info-btn');
         const cancelOrderBtn = document.getElementById('cancel-order-btn');
+        const checkoutTitle = document.getElementById('checkout-title');
+        const addressGroup = document.getElementById('address-group');
+        const addressInput = document.getElementById('address');
+        
         
         // NEW: Function to fetch shop configuration from external file
         async function fetchShopConfig() {
@@ -625,11 +642,32 @@
             });
 
             summaryFoodTotalEl.innerText = `${foodTotal} บาท`;
-            deliveryFeeEl.innerText = 'กรุณากดขอ Location';
+            deliveryFeeEl.innerText = 'โปรดเลือกวิธีรับอาหาร';
             finalTotalEl.innerText = `${foodTotal} บาท`;
+            
             checkoutActions.classList.add('hidden');
-            locationActions.classList.remove('hidden');
+            locationActions.classList.add('hidden');
+            deliveryOptions.classList.remove('hidden');
         }
+        
+        // --- UPDATED: Event Listeners for Delivery/Pickup ---
+        deliveryBtn.addEventListener('click', () => {
+            orderType = 'delivery';
+            deliveryOptions.classList.add('hidden');
+            locationActions.classList.remove('hidden');
+            deliveryFeeEl.innerText = 'กรุณากดขอ Location';
+        });
+
+        pickupBtn.addEventListener('click', () => {
+            orderType = 'pickup';
+            deliveryCost = 0;
+            deliveryOptions.classList.add('hidden');
+            checkoutActions.classList.remove('hidden');
+            deliveryFeeEl.innerText = `0 บาท (รับเองที่ร้าน)`;
+            const foodTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            finalTotalEl.innerText = `${foodTotal} บาท`;
+        });
+
 
         getLocationBtn.addEventListener('click', () => {
             deliveryFeeEl.innerText = 'กำลังค้นหาตำแหน่ง...';
@@ -697,6 +735,15 @@
         proceedToCheckoutBtn.addEventListener('click', () => {
             summaryModal.style.display = 'none';
             checkoutModal.style.display = 'flex';
+            
+            // Adjust checkout form for pickup/delivery
+            if (orderType === 'pickup') {
+                addressGroup.style.display = 'none';
+                addressInput.required = false;
+            } else {
+                addressGroup.style.display = 'block';
+                addressInput.required = true;
+            }
         });
 
         document.getElementById('checkout-form').addEventListener('submit', async (e) => {
@@ -714,11 +761,12 @@
             }).join(', ');
 
             const payload = {
+                deliveryType: orderType, // 'delivery' or 'pickup'
                 name: document.getElementById('nickname').value,
                 phone: document.getElementById('phone').value,
                 address: document.getElementById('address').value,
-                latitude: userLocation.latitude,
-                longitude: userLocation.longitude,
+                latitude: userLocation ? userLocation.latitude : null,
+                longitude: userLocation ? userLocation.longitude : null,
                 orderDetails: orderDetails,
                 totalPrice: foodTotal,
                 deliveryFee: deliveryCost,
