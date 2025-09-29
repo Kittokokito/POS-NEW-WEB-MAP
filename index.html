@@ -528,10 +528,10 @@
                     optionsHTML = `
                         <div class="flex justify-between items-center">
                             <span class="text-4xl font-bold text-green-800">${option.price} บาท</span>
-                            <div class="flex items-center gap-4">
-                                <button class="btn btn-secondary text-3xl p-2 w-12 h-12 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
-                                <span id="${item.id}-${option.key}-qty" class="qty-display w-12 text-center text-3xl font-bold">0</span>
-                                <button class="btn btn-primary text-3xl p-2 w-12 h-12 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
+                            <div class="flex items-center gap-2 flex-shrink-0">
+                                <button class="btn btn-secondary text-2xl p-1 w-10 h-10 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
+                                <span id="${item.id}-${option.key}-qty" class="qty-display w-8 text-center text-2xl font-bold">0</span>
+                                <button class="btn btn-primary text-2xl p-1 w-10 h-10 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
                             </div>
                         </div>
                     `;
@@ -539,11 +539,11 @@
                     optionsHTML = item.options.map(option => `
                         <div class="flex justify-between items-center text-2xl">
                             <span class="text-gray-800">${option.label}</span>
-                            <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-2 flex-shrink-0">
                                 <span class="text-gray-600 font-semibold">${option.price} บ.</span>
-                                <button class="btn btn-secondary text-3xl p-2 w-12 h-12 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
-                                <span id="${item.id}-${option.key}-qty" class="qty-display w-12 text-center text-3xl font-bold">0</span>
-                                <button class="btn btn-primary text-3xl p-2 w-12 h-12 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
+                                <button class="btn btn-secondary text-2xl p-1 w-10 h-10 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)">-</button>
+                                <span id="${item.id}-${option.key}-qty" class="qty-display w-8 text-center text-2xl font-bold">0</span>
+                                <button class="btn btn-primary text-2xl p-1 w-10 h-10 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)">+</button>
                             </div>
                         </div>
                     `).join('');
