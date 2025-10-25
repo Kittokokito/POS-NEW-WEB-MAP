@@ -8,7 +8,7 @@
     <!-- UPDATED: Open Graph Meta Tags -->
     <meta property="og:title" content="ป.ขาหมู เดลิเวอรี">
     <meta property="og:description" content="ราคาเท่าหน้าร้าน ค่าส่งตามจริง">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9B%20%201500%20dpi%20copy.jpg">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9A%20%201500%20dpi%20copy.jpg">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -235,7 +235,7 @@
         
         <!-- UPDATED: Shop Closed Banner -->
         <div id="shop-closed-banner" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-6 mb-8 rounded-lg shadow-md" role="alert">
-            <h3 class="font-bold text-2xl">นอกเวลาขายหรืออาหารหมดครับ</h3>
+            <h3 class="font-bold text-2xl">นอกเวลาขายครับ</h3>
             <p class="text-xl mt-2">เวลารับออเดอร์: <span id="banner-opening-hours" class="font-semibold"></span></p>
         </div>
 
@@ -360,12 +360,22 @@
         </div>
     </div>
     
-    <!-- NEW: Cannot Deliver Modal -->
+    <!-- UPDATED: Cannot Deliver Modal (Text removed) -->
     <div id="cannot-deliver-modal" class="summary-modal">
         <div class="modal-content text-center">
             <h3 class="text-4xl font-bold text-red-600 mb-4">ไม่สามารถดำเนินการต่อได้</h3>
             <p class="text-2xl font-semibold mb-6">ขอบคุณที่ให้ความสนใจครับ 🙏</p>
             <button onclick="location.reload()" class="w-full btn btn-primary mt-4 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
+        </div>
+    </div>
+    
+    <!-- NEW: Thank You Modal for Manual Fee Calculation -->
+     <div id="thankyou-manual-modal" class="summary-modal">
+        <div class="modal-content text-center">
+            <h3 class="text-5xl font-bold text-green-600 mb-6">🙏 ขอบคุณครับ!</h3>
+            <p class="text-3xl mb-6">ทางร้านได้รับข้อมูลแล้ว</p>
+            <p class="text-xl text-gray-700 mb-8">ทางร้านจะ <span class="font-bold text-red-600">ติดต่อกลับเพื่อแจ้งค่าส่ง</span> และยืนยันออเดอร์อีกครั้งครับ</p>
+             <button onclick="location.reload()" class="w-full btn btn-primary mt-8 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
         </div>
     </div>
 
@@ -406,7 +416,7 @@
         let userLocation = null;
         let deliveryCost = 0;
         let isShopOpen = true; // Default to true, will be updated by config
-        let orderType = ''; // 'delivery' or 'pickup'
+        let orderType = ''; // 'delivery', 'pickup', or 'delivery_manual'
 
         // Element references
         const menuPage = document.getElementById('menu-page');
@@ -420,6 +430,7 @@
         const checkoutModal = document.getElementById('checkout-modal');
         const thankYouModal = document.getElementById('thankyou-modal');
         const cannotDeliverModal = document.getElementById('cannot-deliver-modal');
+        const thankyouManualModal = document.getElementById('thankyou-manual-modal'); // New modal reference
         const summaryList = document.getElementById('summary-list');
         const summaryFoodTotalEl = document.getElementById('summary-food-total');
         const deliveryFeeEl = document.getElementById('delivery-fee');
@@ -676,6 +687,7 @@
         pickupBtn.addEventListener('click', () => {
             orderType = 'pickup';
             deliveryCost = 0;
+            userLocation = null; // Clear location for pickup
             deliveryOptions.classList.add('hidden');
             checkoutActions.classList.remove('hidden');
             deliveryFeeEl.innerText = `0 บาท (รับเองที่ร้าน)`;
@@ -725,8 +737,16 @@
                     declineLocationBtn.disabled = false;
                 }
             }, (error) => {
-                deliveryFeeEl.innerText = 'ไม่สามารถเข้าถึงตำแหน่งได้';
-                alert('กรุณาอนุญาตให้เข้าถึงตำแหน่งเพื่อคำนวณค่าส่ง');
+                // UPDATED: Handle location error by offering manual input
+                deliveryFeeEl.innerText = 'ไม่สามารถระบุตำแหน่งได้ กรุณากดปุ่มด้านล่างเพื่อกรอกที่อยู่เอง';
+                orderType = 'delivery_manual'; // Set special order type
+                deliveryCost = 0; // Reset delivery cost
+                userLocation = null; // Clear location
+                const foodTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                finalTotalEl.innerText = `${foodTotal} บาท`; // Show only food total initially
+                proceedToCheckoutBtn.innerText = "กรอกที่อยู่เอง (รอแจ้งค่าส่ง)"; // Change button text
+                checkoutActions.classList.remove('hidden'); // Show checkout button
+                locationActions.classList.add('hidden'); // Hide location buttons
                 getLocationBtn.disabled = false;
                 declineLocationBtn.disabled = false;
             });
@@ -754,14 +774,18 @@
             
             const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
             
-            // Adjust checkout form for pickup/delivery
+            // Adjust checkout form based on orderType
             if (orderType === 'pickup') {
                 addressGroup.style.display = 'none';
                 addressInput.required = false;
                 checkoutTitle.innerText = 'ข้อมูลการรับอาหาร';
                 submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน';
-
-            } else {
+            } else if (orderType === 'delivery_manual') {
+                 addressGroup.style.display = 'block';
+                 addressInput.required = true;
+                 checkoutTitle.innerText = 'ข้อมูลการจัดส่ง (รอแจ้งค่าส่ง)';
+                 submitBtn.innerText = 'ส่งข้อมูล (รอแจ้งค่าส่ง)';
+            } else { // 'delivery'
                 addressGroup.style.display = 'block';
                 addressInput.required = true;
                 checkoutTitle.innerText = 'ข้อมูลการจัดส่ง';
@@ -784,7 +808,7 @@
             }).join(', ');
 
             const payload = {
-                deliveryType: orderType, // 'delivery' or 'pickup'
+                deliveryType: orderType, // 'delivery', 'pickup', or 'delivery_manual'
                 name: document.getElementById('nickname').value,
                 phone: document.getElementById('phone').value,
                 address: document.getElementById('address').value,
@@ -792,7 +816,8 @@
                 longitude: userLocation ? userLocation.longitude : null,
                 orderDetails: orderDetails,
                 totalPrice: foodTotal,
-                deliveryFee: deliveryCost,
+                // Send 0 if manual, actual cost otherwise
+                deliveryFee: (orderType === 'delivery_manual') ? 0 : deliveryCost,
             };
 
             try {
@@ -802,25 +827,30 @@
                 });
                 const result = await response.json();
                 if (result.status === 'success') {
-                    // UPDATED: Populate Thank You modal before showing
-                    const grandTotal = payload.totalPrice + payload.deliveryFee;
-                    document.getElementById('thankyou-food-total').innerText = `${payload.totalPrice} บาท`;
-                    document.getElementById('thankyou-delivery-fee').innerText = `${payload.deliveryFee} บาท`;
-                    document.getElementById('thankyou-grand-total').innerText = `${grandTotal} บาท`;
-                    
-                    const deliveryInstructions = document.getElementById('payment-instructions-delivery');
-                    const pickupInstructions = document.getElementById('payment-instructions-pickup');
-
-                    if (orderType === 'pickup') {
-                        deliveryInstructions.style.display = 'none';
-                        pickupInstructions.style.display = 'block';
-                    } else {
-                        deliveryInstructions.style.display = 'block';
-                        pickupInstructions.style.display = 'none';
-                    }
-
                     checkoutModal.style.display = 'none';
-                    thankYouModal.style.display = 'flex';
+
+                    // Show specific Thank You modal for manual calculation
+                    if(orderType === 'delivery_manual') {
+                        thankyouManualModal.style.display = 'flex';
+                    } else {
+                        // Populate standard Thank You modal
+                        const grandTotal = payload.totalPrice + payload.deliveryFee;
+                        document.getElementById('thankyou-food-total').innerText = `${payload.totalPrice} บาท`;
+                        document.getElementById('thankyou-delivery-fee').innerText = `${payload.deliveryFee} บาท`;
+                        document.getElementById('thankyou-grand-total').innerText = `${grandTotal} บาท`;
+                        
+                        const deliveryInstructions = document.getElementById('payment-instructions-delivery');
+                        const pickupInstructions = document.getElementById('payment-instructions-pickup');
+
+                        if (orderType === 'pickup') {
+                            deliveryInstructions.style.display = 'none';
+                            pickupInstructions.style.display = 'block';
+                        } else {
+                            deliveryInstructions.style.display = 'block';
+                            pickupInstructions.style.display = 'none';
+                        }
+                        thankYouModal.style.display = 'flex';
+                    }
                 } else {
                     throw new Error(result.message);
                 }
@@ -830,7 +860,9 @@
                 // Restore button text based on order type
                  if (orderType === 'pickup') {
                     submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน';
-                } else {
+                } else if (orderType === 'delivery_manual') {
+                     submitBtn.innerText = 'ส่งข้อมูล (รอแจ้งค่าส่ง)';
+                 } else {
                     submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง';
                 }
             }
