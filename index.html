@@ -41,6 +41,10 @@
             transition: background-color 0.2s;
             cursor: pointer;
             font-size: 1.25rem;
+            display: inline-flex; /* For icon alignment */
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem; /* Space between icon and text */
         }
         .btn:disabled {
             background-color: #9ca3af;
@@ -375,6 +379,14 @@
             <h3 class="text-5xl font-bold text-green-600 mb-6">🙏 ขอบคุณครับ!</h3>
             <p class="text-3xl mb-6">ทางร้านได้รับข้อมูลแล้ว</p>
             <p class="text-xl text-gray-700 mb-8">ทางร้านจะ <span class="font-bold text-red-600">ติดต่อกลับเพื่อแจ้งค่าส่ง</span> และยืนยันออเดอร์อีกครั้งครับ</p>
+            <!-- UPDATED: Added LINE Button -->
+            <div class="mt-8 border-t pt-6">
+                <p class="text-lg text-gray-600 mb-4">เพื่อความรวดเร็ว ท่านสามารถแอดและส่ง Location มาทาง LINE ได้ครับ:</p>
+                <a href="https://lin.ee/kTLshZqJ" target="_blank" class="btn bg-green-500 hover:bg-green-600 text-white py-3 text-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21.6c-5.297 0-9.6-4.303-9.6-9.6S6.703 2.4 12 2.4s9.6 4.303 9.6 9.6-4.303 9.6-9.6 9.6zM6.6 11.4c-.663 0-1.2-.537-1.2-1.2s.537-1.2 1.2-1.2 1.2.537 1.2 1.2-.537 1.2-1.2 1.2zm4.8 0c-.663 0-1.2-.537-1.2-1.2s.537-1.2 1.2-1.2 1.2.537 1.2 1.2-.537 1.2-1.2 1.2zm4.8 0c-.663 0-1.2-.537-1.2-1.2s.537-1.2 1.2-1.2 1.2.537 1.2 1.2-.537 1.2-1.2 1.2zm-9.6 3.6c.995 2.115 3.09 3.6 5.568 3.6s4.573-1.485 5.568-3.6H6.6z"/></svg>
+                    ส่ง Location ทาง LINE
+                </a>
+            </div>
              <button onclick="location.reload()" class="w-full btn btn-primary mt-8 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
         </div>
     </div>
@@ -740,7 +752,7 @@
                 // UPDATED: Handle location error by offering manual input
                 deliveryFeeEl.innerText = 'ไม่สามารถระบุตำแหน่งได้ กรุณากดปุ่มด้านล่างเพื่อกรอกที่อยู่เอง';
                 orderType = 'delivery_manual'; // Set special order type
-                deliveryCost = 0; // Reset delivery cost
+                deliveryCost = -1; // Indicate manual fee needed in backend
                 userLocation = null; // Clear location
                 const foodTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
                 finalTotalEl.innerText = `${foodTotal} บาท`; // Show only food total initially
@@ -816,8 +828,7 @@
                 longitude: userLocation ? userLocation.longitude : null,
                 orderDetails: orderDetails,
                 totalPrice: foodTotal,
-                // Send 0 if manual, actual cost otherwise
-                deliveryFee: (orderType === 'delivery_manual') ? 0 : deliveryCost,
+                deliveryFee: deliveryCost, // Will be -1 for manual calculation
             };
 
             try {
