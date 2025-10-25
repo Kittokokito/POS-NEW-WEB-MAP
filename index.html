@@ -1,848 +1,536 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ป.ขาหมู: สั่งขาหมู ส่งถึงบ้าน</title>
-    
-    <!-- UPDATED: Open Graph Meta Tags -->
-    <meta property="og:title" content="ป.ขาหมู เดลิเวอรี">
-    <meta property="og:description" content="ราคาเท่าหน้าร้าน ค่าส่งตามจริง">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9B%20%201500%20dpi%20copy.jpg">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700&display=swap');
-        body {
-            font-family: 'Kanit', sans-serif;
-            background-color: #f7f7f7;
-            font-size: 18px; 
-        }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-        .menu-card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
-        .menu-card:hover {
-            transform: translateY(-5px);
-        }
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            font-weight: 600;
-            transition: background-color 0.2s;
-            cursor: pointer;
-            font-size: 1.25rem;
-        }
-        .btn:disabled {
-            background-color: #9ca3af;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        /* -- Theme Color Update (Green) -- */
-        .btn-primary {
-            background-color: #15803d; /* Dark Green */
-            color: white;
-        }
-        .btn-primary:hover:not(:disabled) {
-            background-color: #166534;
-        }
-        .btn-secondary {
-            background-color: #e5e7eb;
-            color: #4b5563;
-        }
-        .btn-secondary:hover {
-            background-color: #d1d5db;
-        }
-        /* UPDATED: Decline button style */
-        .btn-decline {
-            background-color: #fee2e2;
-            border: 1px solid #fca5a5;
-            color: #b91c1c;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            margin-top: 0.5rem;
-        }
-        .btn-decline:hover {
-            background-color: #fecaca;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ป.ขาหมู: สั่งขาหมู ส่งถึงบ้าน</title>
+    
+        <meta property="og:title" content="ป.ขาหมู เดลิเวอรี">
+    <meta property="og:description" content="ราคาเท่าหน้าร้าน ค่าส่งตามจริง">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9B%20%201500%20dpi%20copy.jpg">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #f7f7f7;
+            font-size: 18px; 
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        .menu-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            font-size: 1.25rem;
+        }
+        .btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        /* -- Theme Color Update (Green) -- */
+        .btn-primary {
+            background-color: #15803d; /* Dark Green */
+            color: white;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: #166534;
+        }
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+        /* UPDATED: Decline button style */
+        .btn-decline {
+            background-color: #fee2e2;
+            border: 1px solid #fca5a5;
+            color: #b91c1c;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            margin-top: 0.5rem;
+        }
+        .btn-decline:hover {
+            background-color: #fecaca;
+        }
 
-        .floating-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1.5rem;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-            display: none;
-            z-index: 1000;
-            max-width: 960px;
-            margin: 0 auto;
-        }
-        .summary-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-        .modal-content {
-            background-color: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-        
-        /* -- UPDATED: Green Background for Header and Footer -- */
-        .main-header, .floating-footer {
-            color: #14532d; /* UPDATED: Changed text to dark green for better contrast */
-            background-color: #4ade80; /* Fallback color */
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3e%3cdefs%3e%3clinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3e%3cstop offset='0%25' style='stop-color:%23a7f3d0;stop-opacity:1' /%3e%3cstop offset='100%25' style='stop-color:%234ade80;stop-opacity:1' /%3e%3c/linearGradient%3e%3c/defs%3e%3crect width='100%25' height='100%25' fill='url(%23grad)'/%3e%3cg fill='none' stroke='%2314532d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.1'%3e%3cpath transform='translate(20 20) scale(0.6)' d='M79.4,51.8C79.4,72,63.1,80.6,50,80.6S20.6,72,20.6,51.8C20.6,31.6,30,23,50,23S79.4,31.6,79.4,51.8z'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M43.9,23.8c0-5.3-4.3-9.6-9.6-9.6s-9.6,4.3-9.6,9.6'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M65.7,23.8c0-5.3,4.3-9.6-9.6-9.6c5.3,0,9.6,4.3,9.6,9.6'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M50,60.2c-5.5,0-10-4.5-10-10c0-5.5,4.5-10,10-10s10,4.5,10,10C60,55.7,55.5,60.2,50,60.2z'/%3e%3ccircle transform='translate(20 20) scale(0.6)' cx='46.5' cy='50.2' r='1.5'/%3e%3ccircle transform='translate(20 20) scale(0.6)' cx='53.5' cy='50.2' r='1.5'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M50,68.9c-2,0-3.8-0.7-5.3-2'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M79.4,51.8C79.4,72,63.1,80.6,50,80.6S20.6,72,20.6,51.8C20.6,31.6,30,23,50,23S79.4,31.6,79.4,51.8z'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M43.9,23.8c0-5.3-4.3-9.6-9.6-9.6s-9.6,4.3-9.6,9.6'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M65.7,23.8c0-5.3,4.3-9.6,9.6-9.6c5.3,0,9.6,4.3,9.6,9.6'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M50,60.2c-5.5,0-10-4.5-10-10c0-5.5,4.5-10,10-10s10,4.5,10,10C60,55.7,55.5,60.2,50,60.2z'/%3e%3ccircle transform='translate(120 130) scale(0.4)' cx='46.5' cy='50.2' r='1.5'/%3e%3ccircle transform='translate(120 130) scale(0.4)' cx='53.5' cy='50.2' r='1.5'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M50,68.9c-2,0-3.8-0.7-5.3-2'/%3e%3ccircle cx='150' cy='50' r='10' opacity='0.7'/%3e%3ccircle cx='80' cy='160' r='5' opacity='0.7'/%3e%3c/g%3e%3c/svg%3e");
-            background-size: 200px 200px;
-        }
-        
-        /* NEW: Style for the menu item image container */
-        .menu-item-image {
-            height: 16rem; /* 256px, same as h-64 */
-            object-fit: cover;
-            width: 100%;
-        }
-        /* Style for other browsers to use natural height */
-        body:not(.is-line-browser) .menu-item-image {
-            height: auto;
-            object-fit: contain; /* Use contain to ensure the whole image is visible */
-        }
+        .floating-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .summary-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        /* -- UPDATED: Green Background for Header and Footer -- */
+        .main-header, .floating-footer {
+            color: #14532d; /* UPDATED: Changed text to dark green for better contrast */
+            background-color: #4ade80; /* Fallback color */
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3e%3cdefs%3e%3clinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3e%3cstop offset='0%25' style='stop-color:%23a7f3d0;stop-opacity:1' /%3e%3cstop offset='100%25' style='stop-color:%234ade80;stop-opacity:1' /%3e%3c/linearGradient%3e%3c/defs%3e%3crect width='100%25' height='100%25' fill='url(%23grad)'/%3e%3cg fill='none' stroke='%2314532d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.1'%3e%3cpath transform='translate(20 20) scale(0.6)' d='M79.4,51.8C79.4,72,63.1,80.6,50,80.6S20.6,72,20.6,51.8C20.6,31.6,30,23,50,23S79.4,31.6,79.4,51.8z'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M43.9,23.8c0-5.3-4.3-9.6-9.6-9.6s-9.6,4.3-9.6,9.6'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M65.7,23.8c0-5.3,4.3-9.6-9.6-9.6c5.3,0,9.6,4.3,9.6,9.6'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M50,60.2c-5.5,0-10-4.5-10-10c0-5.5,4.5-10,10-10s10,4.5,10,10C60,55.7,55.5,60.2,50,60.2z'/%3e%3ccircle transform='translate(20 20) scale(0.6)' cx='46.5' cy='50.2' r='1.5'/%3e%3ccircle transform='translate(20 20) scale(0.6)' cx='53.5' cy='50.2' r='1.5'/%3e%3cpath transform='translate(20 20) scale(0.6)' d='M50,68.9c-2,0-3.8-0.7-5.3-2'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M79.4,51.8C79.4,72,63.1,80.6,50,80.6S20.6,72,20.6,51.8C20.6,31.6,30,23,50,23S79.4,31.6,79.4,51.8z'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M43.9,23.8c0-5.3-4.3-9.6-9.6-9.6s-9.6,4.3-9.6,9.6'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M65.7,23.8c0-5.3,4.3-9.6,9.6-9.6c5.3,0,9.6,4.3,9.6,9.6'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M50,60.2c-5.5,0-10-4.5-10-10c0-5.5,4.5-10,10-10s10,4.5,10,10C60,55.7,55.5,60.2,50,60.2z'/%3e%3ccircle transform='translate(120 130) scale(0.4)' cx='46.5' cy='50.2' r='1.5'/%3e%3ccircle transform='translate(120 130) scale(0.4)' cx='53.5' cy='50.2' r='1.5'/%3e%3cpath transform='translate(120 130) scale(0.4)' d='M50,68.9c-2,0-3.8-0.7-5.3-2'/%3e%3ccircle cx='150' cy='50' r='10' opacity='0.7'/%3e%3ccircle cx='80' cy='160' r='5' opacity='0.7'/%3e%3c/g%3e%3c/svg%3e");
+            background-size: 200px 200px;
+        }
+        
+        /* NEW: Style for the menu item image container */
+        .menu-item-image {
+            height: 16rem; /* 256px, same as h-64 */
+            object-fit: cover;
+            width: 100%;
+        }
+        /* Style for other browsers to use natural height */
+        body:not(.is-line-browser) .menu-item-image {
+            height: auto;
+            object-fit: contain; /* Use contain to ensure the whole image is visible */
+        }
 
 
-        /* == Responsive Fix for Mobile == */
-        @media (max-width: 768px) {
-            body {
-                font-size: 16px; /* Reset base font size for mobile */
-            }
-            /* Header */
-            header .container {
-                flex-direction: column;
-                gap: 0.5rem;
-                text-align: center;
-            }
-             header .flex.items-center {
-                flex-direction: column;
-            }
-            header .flex.flex-col.items-end {
-                align-items: center;
-            }
-            header img {
-                 width: 4rem; /* 64px */
-                 height: 4rem;
-                 margin-right: 0;
-                 margin-bottom: 0.5rem;
-            }
-            header h1 {
-                font-size: 2rem; /* 32px */
-            }
-            header p, header span {
-                font-size: 0.875rem; /* 14px */
-            }
-            main h2 {
-                font-size: 1.875rem; /* 30px */
-                margin-bottom: 2rem;
-            }
+        /* == Responsive Fix for Mobile == */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px; /* Reset base font size for mobile */
+            }
+            /* Header */
+            header .container {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+             header .flex.items-center {
+                flex-direction: column;
+            }
+            header .flex.flex-col.items-end {
+                align-items: center;
+            }
+            header img {
+                 width: 4rem; /* 64px */
+                 height: 4rem;
+                 margin-right: 0;
+                 margin-bottom: 0.5rem;
+            }
+            header h1 {
+                font-size: 2rem; /* 32px */
+            }
+            header p, header span {
+                font-size: 0.875rem; /* 14px */
+            }
+            main h2 {
+                font-size: 1.875rem; /* 30px */
+                margin-bottom: 2rem;
+            }
 
-            /* Menu Card */
-            .menu-card h3 {
-                font-size: 1.25rem; /* 20px */
-            }
-            .menu-card .text-4xl { font-size: 1.5rem; } /* Price */
-            .menu-card .text-2xl { font-size: 1.5rem; } /* Option Label Container */
-            .menu-card .text-2xl .text-gray-800 {
-                font-weight: 700;
-            }
-            .menu-card .w-12.h-12 { width: 2.5rem; height: 2.5rem; } /* +/- Buttons */
-            .menu-card .text-3xl { font-size: 1.25rem; } /* Qty display */
-            
-            /* Footer */
-            .floating-footer { padding: 1rem; }
-            .floating-footer .text-3xl { font-size: 1.125rem; } /* "รวม:" */
-            .floating-footer .text-4xl { font-size: 1.5rem; } /* Total price */
-            .floating-footer .btn { font-size: 0.875rem; padding: 0.5rem 1rem; }
-            
-            /* Modals */
-            .modal-content { padding: 1.5rem; }
-            .modal-content h3 { font-size: 1.5rem; }
-            .modal-content .text-xl, .modal-content .text-2xl, .modal-content .text-3xl, .modal-content .text-4xl, .modal-content .text-5xl {
-                font-size: 1.125rem;
-            }
-            .modal-content .font-bold.text-3xl.text-red-600 { font-size: 1.25rem; }
+            /* Menu Card */
+            .menu-card h3 {
+                font-size: 1.25rem; /* 20px */
+            }
+            .menu-card .text-4xl { font-size: 1.5rem; } /* Price */
+            .menu-card .text-2xl { font-size: 1.5rem; } /* Option Label Container */
+            .menu-card .text-2xl .text-gray-800 {
+                font-weight: 700;
+            }
+            .menu-card .w-12.h-12 { width: 2.5rem; height: 2.5rem; } /* +/- Buttons */
+            .menu-card .text-3xl { font-size: 1.25rem; } /* Qty display */
+            
+            /* Footer */
+            .floating-footer { padding: 1rem; }
+            .floating-footer .text-3xl { font-size: 1.125rem; } /* "รวม:" */
+            .floating-footer .text-4xl { font-size: 1.5rem; } /* Total price */
+            .floating-footer .btn { font-size: 0.875rem; padding: 0.5rem 1rem; }
+            
+            /* Modals */
+            .modal-content { padding: 1.5rem; }
+            .modal-content h3 { font-size: 1.5rem; }
+            .modal-content .text-xl, .modal-content .text-2xl, .modal-content .text-3xl, .modal-content .text-4xl, .modal-content .text-5xl {
+                font-size: 1.125rem;
+            }
+            .modal-content .font-bold.text-3xl.text-red-600 { font-size: 1.25rem; }
 
-            /* == Specific Fix for In-App Browser font scaling issue == */
-            .is-line-browser .menu-card .text-2xl,
-            .is-safari-browser .menu-card .text-2xl,
-            .is-edge-browser .menu-card .text-2xl,
-            .is-samsung-browser .menu-card .text-2xl {
-                font-size: 1rem; /* Reduce font size for the entire option row in these browsers */
-            }
-            
-            /* More aggressive fix for Facebook Messenger's font scaling */
-            .is-messenger-browser .menu-card .text-2xl {
-                 font-size: 0.85rem; /* Make it even smaller to compensate for scaling */
-            }
-            .is-messenger-browser .menu-card .font-semibold { /* Target the price specifically */
-                white-space: nowrap; /* Prevent "70 บ." from wrapping */
-            }
-        }
+            /* == Specific Fix for In-App Browser font scaling issue == */
+            .is-line-browser .menu-card .text-2xl,
+            .is-safari-browser .menu-card .text-2xl,
+            .is-edge-browser .menu-card .text-2xl,
+            .is-samsung-browser .menu-card .text-2xl {
+                font-size: 1rem; /* Reduce font size for the entire option row in these browsers */
+            }
+            
+            /* More aggressive fix for Facebook Messenger's font scaling */
+            .is-messenger-browser .menu-card .text-2xl {
+                 font-size: 0.85rem; /* Make it even smaller to compensate for scaling */
+            }
+            .is-messenger-browser .menu-card .font-semibold { /* Target the price specifically */
+                white-space: nowrap; /* Prevent "70 บ." from wrapping */
+            }
+        }
 
-    </style>
+    </style>
 </head>
 <body class="antialiased">
 
-    <!-- Header -->
-    <header class="main-header py-4 px-6 shadow-lg">
-        <div class="container flex items-center justify-between">
-            <div class="flex items-center">
-                <!-- LOGO UPDATED -->
-                <img src="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9A%20%201500%20dpi%20copy.jpg" alt="P.Pork Leg Logo" class="rounded-full w-20 h-20 mr-6 bg-white p-1 object-contain">
-                <div>
-                    <h1 class="text-5xl font-bold">ป.ขาหมู</h1>
-                    <p class="text-xl mt-2">ราคาหน้าร้าน ค่าส่งตามจริง</p>
-                </div>
-            </div>
-            <div class="flex flex-col items-end">
-                <span class="text-xl font-semibold">โทร: 086-262-4788</span>
-            </div>
-        </div>
-    </header>
-    
-    <!-- Main Content - Menu Page -->
-    <main class="container py-12" id="menu-page">
-        <h2 class="text-6xl font-bold text-center mb-12">เมนูอาหาร</h2>
-        
-        <!-- UPDATED: Shop Closed Banner -->
-        <div id="shop-closed-banner" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-6 mb-8 rounded-lg shadow-md" role="alert">
-            <h3 class="font-bold text-2xl">นอกเวลาขายหรืออาหารหมดครับ</h3>
-            <p class="text-xl mt-2">เวลารับออเดอร์: <span id="banner-opening-hours" class="font-semibold"></span></p>
-        </div>
+        <header class="main-header py-4 px-6 shadow-lg">
+        <div class="container flex items-center justify-between">
+            <div class="flex items-center">
+                                <img src="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9B%20%201500%20dpi%20copy.jpg" alt="P.Pork Leg Logo" class="rounded-full w-20 h-20 mr-6 bg-white p-1 object-contain">
+                <div>
+                    <h1 class="text-5xl font-bold">ป.ขาหมู</h1>
+                    <p class="text-xl mt-2">ราคาหน้าร้าน ค่าส่งตามจริง</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-end">
+                <span class="text-xl font-semibold">โทร: 086-262-4788</span>
+            </div>
+        </div>
+    </header>
+    
+        <main class="container py-12" id="menu-page">
+        <h2 class="text-6xl font-bold text-center mb-12">เมนูอาหาร</h2>
+        
+                <div id="shop-closed-banner" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-6 mb-8 rounded-lg shadow-md" role="alert">
+            <h3 class="font-bold text-2xl">นอกเวลาขายหรืออาหารหมดครับ</h3>
+            <p class="text-xl mt-2">เวลารับออเดอร์: <span id="banner-opening-hours" class="font-semibold"></span></p>
+        </div>
 
-        <div class="grid grid-cols-1 gap-12" id="menu-list">
-            <!-- Loading indicator -->
-            <p class="text-center col-span-full text-gray-500 text-2xl" id="loading-text">กำลังโหลดเมนูอาหาร...</p>
-        </div>
-    </main>
+        <div class="grid grid-cols-1 gap-12" id="menu-list">
+                        <p class="text-center col-span-full text-gray-500 text-2xl" id="loading-text">กำลังโหลดเมนูอาหาร...</p>
+        </div>
+    </main>
 
-    <!-- Floating Footer -->
-    <div id="footer" class="floating-footer flex justify-between items-center">
-        <div class="flex items-center gap-4">
-            <span class="text-3xl">รวม:</span>
-            <span id="total-price" class="text-4xl font-bold">0 บาท</span>
-        </div>
-        <button id="view-summary-btn" class="btn btn-primary">ดูสรุปรายการ</button>
-    </div>
+        <div id="footer" class="floating-footer flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <span class="text-3xl">รวม:</span>
+            <span id="total-price" class="text-4xl font-bold">0 บาท</span>
+        </div>
+        <button id="view-summary-btn" class="btn btn-primary">ดูสรุปรายการ</button>
+    </div>
 
-    <!-- Summary Modal -->
-    <div id="summary-modal" class="summary-modal">
-        <div class="modal-content">
-            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl">&times;</button>
-            <h3 class="text-4xl font-bold mb-8">สรุปรายการสั่งซื้อ</h3>
-            <div id="summary-list" class="space-y-6">
-                <!-- Summary items will be added here -->
-            </div>
-            <div class="mt-10 pt-6 border-t border-gray-200">
-                <div class="flex justify-between items-center mb-4 text-2xl">
-                    <span class="font-semibold">ยอดรวมค่าอาหาร:</span>
-                    <span id="summary-food-total" class="font-semibold">0 บาท</span>
-                </div>
-                <div class="flex justify-between items-center mb-6 text-2xl">
-                    <span class="font-semibold">ค่าจัดส่ง:</span>
-                    <span id="delivery-fee" class="font-semibold text-gray-500">โปรดเลือกวิธีรับอาหาร</span>
-                </div>
-                <!-- -- Theme Color Update (Green) -- -->
-                <div class="flex justify-between items-center font-bold text-3xl text-green-800">
-                    <span>รวมยอดที่ต้องชำระ:</span>
-                    <span id="final-total">0 บาท</span>
-                </div>
-            </div>
-            
-            <!-- UPDATED: Delivery/Pickup Options -->
-            <div id="delivery-options" class="mt-8 grid grid-cols-2 gap-4">
-                <button id="pickup-btn" class="w-full btn btn-secondary py-4 text-xl">รับเองที่ร้าน</button>
-                <button id="delivery-btn" class="w-full btn btn-primary py-4 text-xl">จัดส่งเดลิเวอรี่</button>
-            </div>
+        <div id="summary-modal" class="summary-modal">
+        <div class="modal-content">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl">&times;</button>
+            <h3 class="text-4xl font-bold mb-8">สรุปรายการสั่งซื้อ</h3>
+            <div id="summary-list" class="space-y-6">
+                            </div>
+            <div class="mt-10 pt-6 border-t border-gray-200">
+                <div class="flex justify-between items-center mb-4 text-2xl">
+                    <span class="font-semibold">ยอดรวมค่าอาหาร:</span>
+                    <span id="summary-food-total" class="font-semibold">0 บาท</span>
+                </div>
+                <div class="flex justify-between items-center mb-6 text-2xl">
+                    <span class="font-semibold">ค่าจัดส่ง:</span>
+                    <span id="delivery-fee" class="font-semibold text-gray-500">โปรดเลือกวิธีรับอาหาร</span>
+                </div>
+                                <div class="flex justify-between items-center font-bold text-3xl text-green-800">
+                    <span>รวมยอดที่ต้องชำระ:</span>
+                    <span id="final-total">0 บาท</span>
+                </div>
+            </div>
+            
+                        <div id="delivery-options" class="mt-8 grid grid-cols-2 gap-4">
+                <button id="pickup-btn" class="w-full btn btn-secondary py-4 text-xl">รับเองที่ร้าน</button>
+                <button id="delivery-btn" class="w-full btn btn-primary py-4 text-xl">จัดส่งเดลิเวอรี่</button>
+            </div>
 
-            <div id="location-actions" class="mt-8 text-center hidden">
-                <button id="get-location-btn" class="w-full btn btn-primary py-4 text-2xl">📍 กดปักหมุดอนุญาตให้ตำแหน่ง เพื่อจัดส่งอาหารและคำนวณค่าส่ง</button>
-                <button id="decline-location-btn" class="btn btn-decline">ไม่อนุญาตให้ตำแหน่ง</button>
-            </div>
-            
-            <div id="checkout-actions" class="mt-4 text-center hidden">
-                <button id="proceed-to-checkout-btn" class="w-full btn btn-primary py-4 text-2xl">ให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน</button>
-                <button id="decline-info-btn" class="btn btn-decline">ไม่ให้ข้อมูล</button>
-            </div>
-        </div>
-    </div>
+                        <div id="location-actions" class="mt-8 text-center hidden">
+                <button id="get-location-btn" class="w-full btn btn-primary py-4 text-2xl">📍 กดปักหมุดอนุญาตให้ตำแหน่ง เพื่อจัดส่งอาหารและคำนวณค่าส่ง</button>
+                                <button id="manual-address-btn" class="w-full btn btn-secondary py-4 text-xl mt-4 hidden">ดำเนินการต่อ (รอร้านแจ้งค่าส่ง)</button>
+                <button id="decline-location-btn" class="btn btn-decline">ไม่อนุญาตให้ตำแหน่ง</button>
+            </div>
+                        
+            <div id="checkout-actions" class="mt-4 text-center hidden">
+                <button id="proceed-to-checkout-btn" class="w-full btn btn-primary py-4 text-2xl">ให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน</button>
+                <button id="decline-info-btn" class="btn btn-decline">ไม่ให้ข้อมูล</button>
+            </div>
+        </div>
+    </div>
 
-    <!-- Checkout Modal -->
-    <div id="checkout-modal" class="summary-modal">
-        <div class="modal-content">
-             <button id="close-checkout-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl">&times;</button>
-            <h3 id="checkout-title" class="text-4xl font-bold mb-6">ข้อมูลการจัดส่ง</h3>
-            <form id="checkout-form" class="space-y-4">
-                <div>
-                    <label for="nickname" class="block text-lg font-medium text-gray-700">ชื่อเล่น:</label>
-                    <input type="text" id="nickname" name="nickname" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required>
-                </div>
-                <div>
-                    <label for="phone" class="block text-lg font-medium text-gray-700">เบอร์โทรศัพท์:</label>
-                    <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required>
-                </div>
-                <div id="address-group">
-                    <label for="address" class="block text-lg font-medium text-gray-700">ที่อยู่จัดส่ง จุดสังเกต:</label>
-                    <textarea id="address" name="address" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required></textarea>
-                </div>
-                <div class="text-center space-y-2 pt-2">
-                    <button type="submit" class="w-full btn btn-primary py-4 text-2xl">ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง</button>
-                    <button type="button" id="cancel-order-btn" class="btn btn-decline">ยกเลิก</button>
-                </div>
-            </form>
-        </div>
-    </div>
+        <div id="checkout-modal" class="summary-modal">
+        <div class="modal-content">
+             <button id="close-checkout-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl">&times;</button>
+            <h3 id="checkout-title" class="text-4xl font-bold mb-6">ข้อมูลการจัดส่ง</h3>
+            <form id="checkout-form" class="space-y-4">
+                <div>
+                    <label for="nickname" class="block text-lg font-medium text-gray-700">ชื่อเล่น:</label>
+                    <input type="text" id="nickname" name="nickname" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required>
+                </div>
+                <div>
+                    <label for="phone" class="block text-lg font-medium text-gray-700">เบอร์โทรศัพท์:</label>
+                    <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required>
+                </div>
+                <div id="address-group">
+                    <label for="address" class="block text-lg font-medium text-gray-700">ที่อยู่จัดส่ง จุดสังเกต:</label>
+                    <textarea id="address" name="address" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required></textarea>
+                </div>
+                <div class="text-center space-y-2 pt-2">
+                    <button type="submit" class="w-full btn btn-primary py-4 text-2xl">ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง</button>
+                    <button type="button" id="cancel-order-btn" class="btn btn-decline">ยกเลิก</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <!-- Thank You Modal -->
-    <div id="thankyou-modal" class="summary-modal">
-        <div class="modal-content text-center">
-            <h3 class="text-5xl font-bold text-green-600 mb-6">🙏 ขอบคุณครับ!</h3>
-            <p class="text-3xl mb-6">ทางร้านได้รับออเดอร์แล้ว</p>
-            <p class="text-xl text-gray-500 mb-8">กรุณารอรับการติดต่อจากทางร้านนะครับ</p>
+        <div id="thankyou-modal" class="summary-modal">
+        <div class="modal-content text-center">
+            <h3 class="text-5xl font-bold text-green-600 mb-6">🙏 ขอบคุณครับ!</h3>
+            <p class="text-3xl mb-6">ทางร้านได้รับออเดอร์แล้ว</p>
+            <p class="text-xl text-gray-500 mb-8">กรุณารอรับการติดต่อจากทางร้านนะครับ</p>
 
-            <div class="my-8 text-left border-t border-b border-gray-200 py-6 space-y-3">
-                <div class="flex justify-between items-center text-xl">
-                    <span class="text-gray-600">ยอดรวมค่าอาหาร:</span>
-                    <span id="thankyou-food-total" class="font-semibold text-gray-800">0 บาท</span>
-                </div>
-                <div class="flex justify-between items-center text-xl">
-                    <span class="text-gray-600">ค่าจัดส่ง:</span>
-                    <span id="thankyou-delivery-fee" class="font-semibold text-gray-800">0 บาท</span>
-                </div>
-                <div class="flex justify-between items-center text-2xl font-bold">
-                    <span>ยอดชำระทั้งหมด:</span>
-                    <span id="thankyou-grand-total" class="text-green-800">0 บาท</span>
-                </div>
-            </div>
+            <div class="my-8 text-left border-t border-b border-gray-200 py-6 space-y-3">
+                <div class="flex justify-between items-center text-xl">
+                    <span class="text-gray-600">ยอดรวมค่าอาหาร:</span>
+                    <span id="thankyou-food-total" class="font-semibold text-gray-800">0 บาท</span>
+                </div>
+                <div class="flex justify-between items-center text-xl">
+                    <span class="text-gray-600">ค่าจัดส่ง:</span>
+                    <span id="thankyou-delivery-fee" class="font-semibold text-gray-800">0 บาท</span>
+                </div>
+                <div class="flex justify-between items-center text-2xl font-bold">
+                    <span>ยอดชำระทั้งหมด:</span>
+                    <span id="thankyou-grand-total" class="text-green-800">0 บาท</span>
+                </div>
+            </div>
 
-            <div class="bg-yellow-100 p-6 rounded-lg border border-yellow-300">
-                <!-- This part is for Delivery -->
-                <div id="payment-instructions-delivery">
-                    <p class="font-bold text-3xl text-red-600">คำแนะนำการชำระเงิน</p>
-                    <p class="mt-4 text-xl">ลูกค้ารับอาหารแล้วค่อยสแกนจ่ายด้วย QR Code ในถุงอาหาร <span class="font-bold text-red-600">**ไม่ต้อง**</span> จ่ายเงินให้ไรเดอร์ (ทางร้านสำรองจ่ายไปก่อนแล้วครับ)</p>
-                </div>
-                <!-- This new part is for Pickup -->
-                <a href="tel:0862624788" id="payment-instructions-pickup" class="hidden block cursor-pointer">
-                    <p class="font-bold text-3xl text-red-600">T. 086-262-4788</p>
-                    <p class="mt-4 text-xl">ถ้าจอดไม่ได้ก็โทรมานะครับ<br>📞 กดเพื่อโทรออก</p>
-                </a>
-            </div>
-             <button onclick="location.reload()" class="w-full btn btn-primary mt-8 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
-        </div>
-    </div>
-    
-    <!-- NEW: Cannot Deliver Modal -->
-    <div id="cannot-deliver-modal" class="summary-modal">
-        <div class="modal-content text-center">
-            <h3 class="text-4xl font-bold text-red-600 mb-4">ไม่สามารถดำเนินการต่อได้</h3>
-            <p class="text-2xl font-semibold mb-6">ขอบคุณที่ให้ความสนใจครับ 🙏</p>
-            <button onclick="location.reload()" class="w-full btn btn-primary mt-4 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
-        </div>
-    </div>
+            <div class="bg-yellow-100 p-6 rounded-lg border border-yellow-300">
+                                <div id="payment-instructions-delivery">
+                    <p class="font-bold text-3xl text-red-600">คำแนะนำการชำระเงิน</p>
+                    <p class="mt-4 text-xl">ลูกค้ารับอาหารแล้วค่อยสแกนจ่ายด้วย QR Code ในถุงอาหาร <span class="font-bold text-red-600">**ไม่ต้อง**</span> จ่ายเงินให้ไรเดอร์ (ทางร้านสำรองจ่ายไปก่อนแล้วครับ)</p>
+                </div>
+                                <a href="tel:0862624788" id="payment-instructions-pickup" class="hidden block cursor-pointer">
+                    <p class="font-bold text-3xl text-red-600">T. 086-262-4788</p>
+                    <p class="mt-4 text-xl">ถ้าจอดไม่ได้ก็โทรมานะครับ<br>📞 กดเพื่อโทรออก</p>
+                </a>
+            </div>
+             <button onclick="location.reload()" class="w-full btn btn-primary mt-8 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
+        </div>
+    </div>
+    
+        <div id="cannot-deliver-modal" class="summary-modal">
+        <div class="modal-content text-center">
+            <h3 class="text-4xl font-bold text-red-600 mb-4">ไม่สามารถดำเนินการต่อได้</h3>
+            <p class="text-2xl font-semibold mb-6">ขอบคุณที่ให้ความสนใจครับ 🙏</p>
+            <button onclick="location.reload()" class="w-full btn btn-primary mt-4 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
+        </div>
+    </div>
 
 
-    <script>
-        // --- การตั้งค่า (Configuration) ---
-        const CONFIG_URL = "https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/config.json";
-        // ----------------------------------
+    <script>
+        // --- การตั้งค่า (Configuration) ---
+        const CONFIG_URL = "https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/config.json";
+        // ----------------------------------
 
 
-        // FIXED: Using a self-invoking function to prevent re-declaration errors
-        (function() {
-            const ua = navigator.userAgent.toLowerCase();
-            if (ua.includes('line/')) {
-                document.body.classList.add('is-line-browser');
-            }
-            if (ua.includes('fban/messenger') || ua.includes('fb_iab')) {
-                document.body.classList.add('is-messenger-browser');
-            }
-            if (ua.includes('samsungbrowser')) {
-                document.body.classList.add('is-samsung-browser');
-            }
-            if (ua.includes('edg/')) {
-                document.body.classList.add('is-edge-browser');
-            }
-            // Safari check: must contain 'safari' but not 'chrome' or 'crios' (Chrome on iOS)
-            if (ua.includes('safari') && !ua.includes('chrome') && !ua.includes('crios')) {
-                document.body.classList.add('is-safari-browser');
-            }
-        })();
+        // FIXED: Using a self-invoking function to prevent re-declaration errors
+        (function() {
+            const ua = navigator.userAgent.toLowerCase();
+            if (ua.includes('line/')) {
+                document.body.classList.add('is-line-browser');
+            }
+            if (ua.includes('fban/messenger') || ua.includes('fb_iab')) {
+                document.body.classList.add('is-messenger-browser');
+            }
+            if (ua.includes('samsungbrowser')) {
+                document.body.classList.add('is-samsung-browser');
+            }
+            if (ua.includes('edg/')) {
+                document.body.classList.add('is-edge-browser');
+            }
+            // Safari check: must contain 'safari' but not 'chrome' or 'crios' (Chrome on iOS)
+            if (ua.includes('safari') && !ua.includes('chrome') && !ua.includes('crios')) {
+                document.body.classList.add('is-safari-browser');
+            }
+        })();
 
-        // !!! IMPORTANT !!!
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbzDt0gvMPJUztj_4yQ6Ygb8c3G0aSSB9zE9oJZ2OJiqzcvHbtuy7ckLqvBErBJn5rxA/exec";
+        // !!! IMPORTANT !!!
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzDt0gvMPJUztj_4yQ6Ygb8c3G0aSSB9zE9oJZ2OJiqzcvHbtuy7ckLqvBErBJn5rxA/exec";
 
-        let shopConfig = {};
-        let menuItems = [];
-        let cart = [];
-        let userLocation = null;
-        let deliveryCost = 0;
-        let isShopOpen = true; // Default to true, will be updated by config
-        let orderType = ''; // 'delivery' or 'pickup'
+        let shopConfig = {};
+        let menuItems = [];
+        let cart = [];
+        let userLocation = null;
+        let deliveryCost = 0;
+        let isShopOpen = true; // Default to true, will be updated by config
+        let orderType = ''; // 'delivery' or 'pickup'
 
-        // Element references
-        const menuPage = document.getElementById('menu-page');
-        const shopClosedBanner = document.getElementById('shop-closed-banner');
-        const bannerOpeningHours = document.getElementById('banner-opening-hours');
-        const menuList = document.getElementById('menu-list');
-        const loadingText = document.getElementById('loading-text');
-        const totalPriceEl = document.getElementById('total-price');
-        const footer = document.getElementById('footer');
-        const summaryModal = document.getElementById('summary-modal');
-        const checkoutModal = document.getElementById('checkout-modal');
-        const thankYouModal = document.getElementById('thankyou-modal');
-        const cannotDeliverModal = document.getElementById('cannot-deliver-modal');
-        const summaryList = document.getElementById('summary-list');
-        const summaryFoodTotalEl = document.getElementById('summary-food-total');
-        const deliveryFeeEl = document.getElementById('delivery-fee');
-        const finalTotalEl = document.getElementById('final-total');
-        
-        const deliveryOptions = document.getElementById('delivery-options');
-        const pickupBtn = document.getElementById('pickup-btn');
-        const deliveryBtn = document.getElementById('delivery-btn');
+        // Element references
+        const menuPage = document.getElementById('menu-page');
+        const shopClosedBanner = document.getElementById('shop-closed-banner');
+        const bannerOpeningHours = document.getElementById('banner-opening-hours');
+        const menuList = document.getElementById('menu-list');
+        const loadingText = document.getElementById('loading-text');
+        const totalPriceEl = document.getElementById('total-price');
+        const footer = document.getElementById('footer');
+        const summaryModal = document.getElementById('summary-modal');
+        const checkoutModal = document.getElementById('checkout-modal');
+        const thankYouModal = document.getElementById('thankyou-modal');
+        const cannotDeliverModal = document.getElementById('cannot-deliver-modal');
+        const summaryList = document.getElementById('summary-list');
+        const summaryFoodTotalEl = document.getElementById('summary-food-total');
+        const deliveryFeeEl = document.getElementById('delivery-fee');
+        const finalTotalEl = document.getElementById('final-total');
+        
+        const deliveryOptions = document.getElementById('delivery-options');
+        const pickupBtn = document.getElementById('pickup-btn');
+        const deliveryBtn = document.getElementById('delivery-btn');
 
-        const locationActions = document.getElementById('location-actions');
-        const checkoutActions = document.getElementById('checkout-actions');
-        
-        const getLocationBtn = document.getElementById('get-location-btn');
-        const proceedToCheckoutBtn = document.getElementById('proceed-to-checkout-btn');
-        const declineLocationBtn = document.getElementById('decline-location-btn');
-        const declineInfoBtn = document.getElementById('decline-info-btn');
-        const cancelOrderBtn = document.getElementById('cancel-order-btn');
-        const checkoutTitle = document.getElementById('checkout-title');
-        const addressGroup = document.getElementById('address-group');
-        const addressInput = document.getElementById('address');
-        
-        
-        // NEW: Function to fetch shop configuration from external file
-        async function fetchShopConfig() {
-            // A simple check for a placeholder URL
-            if (CONFIG_URL.includes("YOUR_GITHUB_RAW_CONFIG_JSON_URL")) {
-                 loadingText.innerHTML = `<p class="text-center col-span-full text-red-500">ข้อผิดพลาด: กรุณาตั้งค่าลิงก์ไฟล์ config.json ในโค้ด index.html ก่อน</p>`;
-                return;
-            }
-            try {
-                const response = await fetch(CONFIG_URL + '?t=' + new Date().getTime()); // Append timestamp to prevent caching
-                if (!response.ok) throw new Error('ไม่สามารถโหลดไฟล์ตั้งค่า (config.json) ได้');
-                shopConfig = await response.json();
-                
-                // After config is loaded, check shop status and proceed
-                isShopOpen = checkShopStatus(); // Update global status
+        const locationActions = document.getElementById('location-actions');
+        const checkoutActions = document.getElementById('checkout-actions');
+        
+        const getLocationBtn = document.getElementById('get-location-btn');
+        const proceedToCheckoutBtn = document.getElementById('proceed-to-checkout-btn');
+        const declineLocationBtn = document.getElementById('decline-location-btn');
+        // *** START OF CHANGE 2 (JS) ***
+        const manualAddressBtn = document.getElementById('manual-address-btn');
+        // *** END OF CHANGE 2 (JS) ***
+        const declineInfoBtn = document.getElementById('decline-info-btn');
+        const cancelOrderBtn = document.getElementById('cancel-order-btn');
+        const checkoutTitle = document.getElementById('checkout-title');
+        const addressGroup = document.getElementById('address-group');
+        const addressInput = document.getElementById('address');
+        
+        
+        // NEW: Function to fetch shop configuration from external file
+        async function fetchShopConfig() {
+            // A simple check for a placeholder URL
+            if (CONFIG_URL.includes("YOUR_GITHUB_RAW_CONFIG_JSON_URL")) {
+                 loadingText.innerHTML = `<p class="text-center col-span-full text-red-500">ข้อผิดพลาด: กรุณาตั้งค่าลิงก์ไฟล์ config.json ในโค้ด index.html ก่อน</p>`;
+                return;
+            }
+            try {
+                const response = await fetch(CONFIG_URL + '?t=' + new Date().getTime()); // Append timestamp to prevent caching
+                if (!response.ok) throw new Error('ไม่สามารถโหลดไฟล์ตั้งค่า (config.json) ได้');
+                shopConfig = await response.json();
+                
+                // After config is loaded, check shop status and proceed
+                isShopOpen = checkShopStatus(); // Update global status
 
-                if (!isShopOpen) {
-                    shopClosedBanner.classList.remove('hidden');
-                    bannerOpeningHours.innerText = `${shopConfig.openingTime} - ${shopConfig.closingTime} น.`;
-                }
-                
-                // Always fetch the menu
-                fetchMenu();
+                if (!isShopOpen) {
+                    shopClosedBanner.classList.remove('hidden');
+                    bannerOpeningHours.innerText = `${shopConfig.openingTime} - ${shopConfig.closingTime} น.`;
+                }
+                
+                // Always fetch the menu
+                fetchMenu();
 
-            } catch (error) {
-                loadingText.innerHTML = `<p class="text-center col-span-full text-red-500">เกิดข้อผิดพลาด: ${error.message}</p>`;
-            }
-        }
-        
-        function checkShopStatus() {
-            if (!shopConfig.openingTime) return false; // Not ready yet
+            } catch (error) {
+                loadingText.innerHTML = `<p class="text-center col-span-full text-red-500">เกิดข้อผิดพลาด: ${error.message}</p>`;
+            }
+        }
+        
+        function checkShopStatus() {
+            if (!shopConfig.openingTime) return false; // Not ready yet
 
-            const now = new Date();
-            const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-            const dayOfWeek = now.getDay();
-            const currentTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+            const now = new Date();
+            const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+            const dayOfWeek = now.getDay();
+            const currentTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
 
-            const isHoliday = (shopConfig.specialHolidays || []).includes(today);
-            const isClosedDay = (shopConfig.closedDays || []).includes(dayOfWeek);
-            const isOutsideHours = currentTime < shopConfig.openingTime || currentTime >= shopConfig.closingTime;
+            const isHoliday = (shopConfig.specialHolidays || []).includes(today);
+            const isClosedDay = (shopConfig.closedDays || []).includes(dayOfWeek);
+            const isOutsideHours = currentTime < shopConfig.openingTime || currentTime >= shopConfig.closingTime;
 
-            if (isHoliday || isClosedDay || isOutsideHours) {
-                return false; // Shop is closed
-            }
-            return true; // Shop is open
-        }
-
-
-        // Fetch menu from Google Apps Script
-        async function fetchMenu() {
-            try {
-                const response = await fetch(GAS_URL);
-                if (!response.ok) throw new Error('Network response was not ok');
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    menuItems = result.data.map(item => {
-                        let options = [];
-                        if (item.Options && item.Options.trim() !== '') {
-                            options = (item.Options || '').split(',')
-                                .map(opt => {
-                                    if (!opt || !opt.includes(':')) return null;
-                                    const [label, priceStr] = opt.split(':');
-                                    if (label && priceStr) {
-                                        const price = parseInt(priceStr.trim(), 10);
-                                        if (!isNaN(price)) {
-                                            return { label: label.trim(), price: price, key: label.trim() };
-                                        }
-                                    }
-                                    return null;
-                                }).filter(Boolean);
-                        } 
-                        else if (item.Price && !isNaN(parseInt(item.Price, 10))) {
-                            options = [{
-                                label: 'ราคา',
-                                price: parseInt(item.Price, 10),
-                                key: 'default'
-                            }];
-                        }
-
-                        return {
-                            id: item.ItemID,
-                            name: item.Name,
-                            image: item.ImageURL || `https://placehold.co/400x300/e5e7eb/555?text=${encodeURIComponent(item.Name)}`,
-                            options: options
-                        };
-                    });
-                    renderMenuItems();
-                } else {
-                    throw new Error(result.message);
-                }
-            } catch (error) {
-                menuList.innerHTML = `<p class="text-center col-span-full text-red-500">ไม่สามารถโหลดเมนูได้: ${error.message}</p>`;
-            }
-        }
-
-        // Render menu items
-        function renderMenuItems() {
-            menuList.innerHTML = '';
-            const disabledAttr = isShopOpen ? '' : 'disabled';
-
-            menuItems.forEach(item => {
-                if (!item.options || item.options.length === 0) {
-                    return;
-                }
-
-                const card = document.createElement('div');
-                card.className = 'menu-card p-6';
-                
-                const isSimpleItem = item.options.length === 1 && item.options[0].key === 'default';
-                let optionsHTML = '';
-
-                if (isSimpleItem) {
-                    const option = item.options[0];
-                    optionsHTML = `
-                        <div class="flex justify-between items-center">
-                            <span class="text-4xl font-bold text-green-800">${option.price} บาท</span>
-                            <div class="flex items-center gap-2 flex-shrink-0">
-                                <button class="btn btn-secondary text-2xl p-1 w-10 h-10 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)" ${disabledAttr}>-</button>
-                                <span id="${item.id}-${option.key}-qty" class="qty-display w-8 text-center text-2xl font-bold">0</span>
-                                <button class="btn btn-primary text-2xl p-1 w-10 h-10 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)" ${disabledAttr}>+</button>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    optionsHTML = item.options.map(option => `
-                        <div class="flex justify-between items-center text-2xl">
-                            <span class="text-gray-800">${option.label}</span>
-                            <div class="flex items-center gap-2 flex-shrink-0">
-                                <span class="text-gray-600 font-semibold">${option.price} บ.</span>
-                                <button class="btn btn-secondary text-2xl p-1 w-10 h-10 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', -1)" ${disabledAttr}>-</button>
-                                <span id="${item.id}-${option.key}-qty" class="qty-display w-8 text-center text-2xl font-bold">0</span>
-                                <button class="btn btn-primary text-2xl p-1 w-10 h-10 flex justify-center items-center" onclick="updateQuantity('${item.id}', '${option.key}', 1)" ${disabledAttr}>+</button>
-                            </div>
-                        </div>
-                    `).join('');
-                }
-
-                card.innerHTML = `
-                    <div class="flex-grow">
-                        <!-- UPDATED: Added a specific class to the image -->
-                        <img src="${item.image}" alt="${item.name}" class="menu-item-image rounded-lg mb-6">
-                        <h3 class="text-4xl font-bold mb-5">${item.name}</h3>
-                        <div class="options space-y-4">
-                            ${optionsHTML}
-                        </div>
-                    </div>
-                    <div class="mt-6 pt-6 border-t">
-                        <input type="text" id="${item.id}-note" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-4 text-xl" placeholder="Note">
-                    </div>
-                `;
-                menuList.appendChild(card);
-            });
-        }
-
-        window.updateQuantity = (itemId, optionKey, change) => {
-            if (!isShopOpen) return; // Prevent ordering when shop is closed
-
-            const menuItem = menuItems.find(i => i.id === itemId);
-            const option = menuItem.options.find(o => o.key === optionKey);
-            let cartItem = cart.find(i => i.id === itemId && i.optionKey === optionKey);
-
-            if (!cartItem && change > 0) {
-                 const isSimpleItem = option.key === 'default';
-                cartItem = { id: itemId, name: menuItem.name, optionLabel: isSimpleItem ? '' : option.label, optionKey: optionKey, price: option.price, quantity: 0, note: '' };
-                cart.push(cartItem);
-            }
-            
-            if (cartItem) {
-                cartItem.quantity += change;
-                if (cartItem.quantity <= 0) {
-                    cart = cart.filter(i => i !== cartItem);
-                }
-            }
-            
-            document.getElementById(`${itemId}-${optionKey}-qty`).innerText = cartItem ? cartItem.quantity : 0;
-            updateFooter();
-        }
-
-        function updateFooter() {
-            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            totalPriceEl.innerText = `${totalPrice} บาท`;
-            footer.style.display = totalPrice > 0 ? 'flex' : 'none';
-        }
-
-        document.getElementById('view-summary-btn').addEventListener('click', () => {
-            if (cart.length === 0) return;
-            updateSummaryModal();
-            summaryModal.style.display = 'flex';
-        });
-
-        document.getElementById('close-modal-btn').addEventListener('click', () => summaryModal.style.display = 'none');
-        document.getElementById('close-checkout-modal-btn').addEventListener('click', () => checkoutModal.style.display = 'none');
-
-        function updateSummaryModal() {
-            summaryList.innerHTML = '';
-            let foodTotal = 0;
-            cart.forEach(item => {
-                const noteInput = document.getElementById(`${item.id}-note`);
-                item.note = noteInput ? noteInput.value.trim() : '';
-                
-                const displayName = item.optionLabel ? `${item.name} (${item.optionLabel})` : item.name;
-
-                summaryList.innerHTML += `
-                    <div class="flex justify-between items-start bg-gray-50 p-4 rounded-lg text-xl">
-                        <div>
-                            <p class="font-semibold">${displayName} x ${item.quantity}</p>
-                            ${item.note ? `<p class="text-lg text-green-600 italic">พิเศษ: ${item.note}</p>` : ''}
-                        </div>
-                        <span class="font-bold whitespace-nowrap">${item.price * item.quantity} บาท</span>
-                    </div>`;
-                foodTotal += item.price * item.quantity;
-            });
-
-            summaryFoodTotalEl.innerText = `${foodTotal} บาท`;
-            deliveryFeeEl.innerText = 'โปรดเลือกวิธีรับอาหาร';
-            finalTotalEl.innerText = `${foodTotal} บาท`;
-            
-            checkoutActions.classList.add('hidden');
-            locationActions.classList.add('hidden');
-            deliveryOptions.classList.remove('hidden');
-        }
-        
-        // --- UPDATED: Event Listeners for Delivery/Pickup ---
-        deliveryBtn.addEventListener('click', () => {
-            orderType = 'delivery';
-            deliveryOptions.classList.add('hidden');
-            locationActions.classList.remove('hidden');
-            deliveryFeeEl.innerText = 'กรุณากดขอ Location';
-            proceedToCheckoutBtn.innerText = "ให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่งอาหาร";
-        });
-
-        pickupBtn.addEventListener('click', () => {
-            orderType = 'pickup';
-            deliveryCost = 0;
-            deliveryOptions.classList.add('hidden');
-            checkoutActions.classList.remove('hidden');
-            deliveryFeeEl.innerText = `0 บาท (รับเองที่ร้าน)`;
-            const foodTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            finalTotalEl.innerText = `${foodTotal} บาท`;
-            proceedToCheckoutBtn.innerText = "ให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน";
-        });
+            if (isHoliday || isClosedDay || isOutsideHours) {
+                return false; // Shop is closed
+            }
+            return true; // Shop is open
+        }
 
 
-        getLocationBtn.addEventListener('click', () => {
-            deliveryFeeEl.innerText = 'กำลังค้นหาตำแหน่ง...';
-            getLocationBtn.disabled = true;
-            declineLocationBtn.disabled = true;
+        // Fetch menu from Google Apps Script
+        async function fetchMenu() {
+            try {
+                const response = await fetch(GAS_URL);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const result = await response.json();
 
-            if (!navigator.geolocation) {
-                deliveryFeeEl.innerText = 'เบราว์เซอร์ไม่รองรับ';
-                getLocationBtn.disabled = false;
-                declineLocationBtn.disabled = false;
-                return;
-            }
+                if (result.status === 'success') {
+                    menuItems = result.data.map(item => {
+                        let options = [];
+                        if (item.Options && item.Options.trim() !== '') {
+                            options = (item.Options || '').split(',')
+                                .map(opt => {
+                                    if (!opt || !opt.includes(':')) return null;
+                                    const [label, priceStr] = opt.split(':');
+                                    if (label && priceStr) {
+                                        const price = parseInt(priceStr.trim(), 10);
+                                        if (!isNaN(price)) {
+                                            return { label: label.trim(), price: price, key: label.trim() };
+                                        }
+                                    }
+                                    return null;
+                                }).filter(Boolean);
+                        } 
+                        else if (item.Price && !isNaN(parseInt(item.Price, 10))) {
+                            options = [{
+                                label: 'ราคา',
+                                price: parseInt(item.Price, 10),
+                                key: 'default'
+                            }];
+                        }
 
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                userLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude };
-                deliveryFeeEl.innerText = 'กำลังคำนวณค่าส่ง...';
+                        return {
+                            id: item.ItemID,
+                            name: item.Name,
+                            image: item.ImageURL || `https://placehold.co/400x300/e5e7eb/555?text=${encodeURIComponent(item.Name)}`,
+                            options: options
+                        };
+                    });
+                    renderMenuItems();
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                menuList.innerHTML = `<p class="text-center col-span-full text-red-500">ไม่สามารถโหลดเมนูได้: ${error.message}</p>`;
+            }
+        }
 
-                try {
-                    const response = await fetch(GAS_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({ action: 'calculateFee', lat: userLocation.latitude, lng: userLocation.longitude })
-                    });
-                    const result = await response.json();
-                    if (result.status === 'success') {
-                        deliveryCost = result.fee;
-                        const foodTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                        deliveryFeeEl.innerText = `${deliveryCost} บาท (ระยะทาง ~${result.distance} กม.)`;
-                        finalTotalEl.innerText = `${foodTotal + deliveryCost} บาท`;
-                        checkoutActions.classList.remove('hidden');
-                        locationActions.classList.add('hidden');
-                    } else {
-                        throw new Error(result.message);
-                    }
-                } catch (error) {
-                    deliveryFeeEl.innerText = `คำนวณผิดพลาด`;
-                    alert(`เกิดข้อผิดพลาดในการคำนวณค่าส่ง: ${error.message}`);
-                } finally {
-                    getLocationBtn.disabled = false;
-                    declineLocationBtn.disabled = false;
-                }
-            }, (error) => {
-                deliveryFeeEl.innerText = 'ไม่สามารถเข้าถึงตำแหน่งได้';
-                alert('กรุณาอนุญาตให้เข้าถึงตำแหน่งเพื่อคำนวณค่าส่ง');
-                getLocationBtn.disabled = false;
-                declineLocationBtn.disabled = false;
-            });
-        });
+        // Render menu items
+        function renderMenuItems() {
+            menuList.innerHTML = '';
+            const disabledAttr = isShopOpen ? '' : 'disabled';
 
-        // NEW: Event listener for decline button
-        declineLocationBtn.addEventListener('click', () => {
-            summaryModal.style.display = 'none';
-            cannotDeliverModal.style.display = 'flex';
-        });
-
-        declineInfoBtn.addEventListener('click', () => {
-            summaryModal.style.display = 'none';
-            cannotDeliverModal.style.display = 'flex';
-        });
-
-        cancelOrderBtn.addEventListener('click', () => {
-            checkoutModal.style.display = 'none';
-            cannotDeliverModal.style.display = 'flex';
-        });
-
-        proceedToCheckoutBtn.addEventListener('click', () => {
-            summaryModal.style.display = 'none';
-            checkoutModal.style.display = 'flex';
-            
-            const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
-            
-            // Adjust checkout form for pickup/delivery
-            if (orderType === 'pickup') {
-                addressGroup.style.display = 'none';
-                addressInput.required = false;
-                checkoutTitle.innerText = 'ข้อมูลการรับอาหาร';
-                submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน';
-
-            } else {
-                addressGroup.style.display = 'block';
-                addressInput.required = true;
-                checkoutTitle.innerText = 'ข้อมูลการจัดส่ง';
-                submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง';
-            }
-        });
-
-        document.getElementById('checkout-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.innerText = 'กำลังส่งออเดอร์...';
-
-            const foodTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const orderDetails = cart.map(item => {
-                 const displayName = item.optionLabel ? `${item.name} (${item.optionLabel})` : item.name;
-                let detail = `${displayName} x${item.quantity}`;
-                if (item.note) detail += ` [${item.note}]`;
-                return detail;
-            }).join(', ');
-
-            const payload = {
-                deliveryType: orderType, // 'delivery' or 'pickup'
-                name: document.getElementById('nickname').value,
-                phone: document.getElementById('phone').value,
-                address: document.getElementById('address').value,
-                latitude: userLocation ? userLocation.latitude : null,
-                longitude: userLocation ? userLocation.longitude : null,
-                orderDetails: orderDetails,
-                totalPrice: foodTotal,
-                deliveryFee: deliveryCost,
-            };
-
-            try {
-                const response = await fetch(GAS_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json();
-                if (result.status === 'success') {
-                    // UPDATED: Populate Thank You modal before showing
-                    const grandTotal = payload.totalPrice + payload.deliveryFee;
-                    document.getElementById('thankyou-food-total').innerText = `${payload.totalPrice} บาท`;
-                    document.getElementById('thankyou-delivery-fee').innerText = `${payload.deliveryFee} บาท`;
-                    document.getElementById('thankyou-grand-total').innerText = `${grandTotal} บาท`;
-                    
-                    const deliveryInstructions = document.getElementById('payment-instructions-delivery');
-                    const pickupInstructions = document.getElementById('payment-instructions-pickup');
-
-                    if (orderType === 'pickup') {
-                        deliveryInstructions.style.display = 'none';
-                        pickupInstructions.style.display = 'block';
-                    } else {
-                        deliveryInstructions.style.display = 'block';
-                        pickupInstructions.style.display = 'none';
-                    }
-
-                    checkoutModal.style.display = 'none';
-                    thankYouModal.style.display = 'flex';
-                } else {
-                    throw new Error(result.message);
-                }
-            } catch (error) {
-                alert(`เกิดข้อผิดพลาดในการส่งออเดอร์: ${error.message}`);
-                submitBtn.disabled = false;
-                // Restore button text based on order type
-                 if (orderType === 'pickup') {
-                    submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน';
-                } else {
-                    submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง';
-                }
-            }
-        });
-        
-        // Run shop status check on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchShopConfig();
-        });
-
-    </script>
-
-</body>
-</html>
-
+            menuItems.forEach(item => {
+                if (!item.options || item.options.length === 0) {
+                    return;
+                }
