@@ -8,7 +8,7 @@
     <!-- UPDATED: Open Graph Meta Tags -->
     <meta property="og:title" content="ป.ขาหมู เดลิเวอรี">
     <meta property="og:description" content="ราคาเท่าหน้าร้าน ค่าส่งตามจริง">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9A%20%201500%20dpi%20copy.jpg">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9B%20%201500%20dpi%20copy.jpg">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -221,7 +221,7 @@
         <div class="container flex items-center justify-between">
             <div class="flex items-center">
                 <!-- LOGO UPDATED -->
-                <img src="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9A%20%201500%20dpi%20copy.jpg" alt="P.Pork Leg Logo" class="rounded-full w-20 h-20 mr-6 bg-white p-1 object-contain">
+                <img src="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo%20%E0%B8%9B.%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%20%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%A3%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%9B%20%201500%20dpi%20copy.jpg" alt="P.Pork Leg Logo" class="rounded-full w-20 h-20 mr-6 bg-white p-1 object-contain">
                 <div>
                     <h1 class="text-5xl font-bold">ป.ขาหมู</h1>
                     <p class="text-xl mt-2">ราคาหน้าร้าน ค่าส่งตามจริง</p>
@@ -314,6 +314,13 @@
                     <label for="phone" class="block text-lg font-medium text-gray-700">เบอร์โทรศัพท์:</label>
                     <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required>
                 </div>
+                <!-- NEW: Pickup Time Selector -->
+                <div id="pickup-time-group" class="hidden">
+                    <label for="pickup-time" class="block text-lg font-medium text-gray-700">เวลาที่จะเข้ามารับ:</label>
+                    <select id="pickup-time" name="pickup-time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required>
+                        <!-- Time slots will be generated here -->
+                    </select>
+                </div>
                 <div id="address-group">
                     <label for="address" class="block text-lg font-medium text-gray-700">ที่อยู่จัดส่ง จุดสังเกต:</label>
                     <textarea id="address" name="address" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2 text-lg" required></textarea>
@@ -381,10 +388,10 @@
             <p class="text-xl text-gray-700 mb-8">ทางร้านจะ <span class="font-bold text-red-600">ติดต่อกลับเพื่อแจ้งค่าส่ง</span> และยืนยันออเดอร์อีกครั้งครับ</p>
             <!-- UPDATED: Added LINE Button -->
             <div class="mt-8 border-t pt-6">
-                <p class="text-lg text-gray-600 mb-4">เพื่อความรวดเร็ว ท่านสามารถแอดและส่ง Location มาทาง LINE ได้ครับ:</p>
-                <a href="https://line.me/ti/p/m2kaLmxmr8" target="_blank" class="btn bg-green-500 hover:bg-green-600 text-white py-3 text-xl">
+                <p class="text-lg text-gray-600 mb-4">เพื่อความรวดเร็ว ท่านสามารถส่ง Location มาทาง LINE ได้ครับ:</p>
+                <a href="https://lin.ee/kTLshZqJ" target="_blank" class="btn bg-green-500 hover:bg-green-600 text-white py-3 text-xl">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21.6c-5.297 0-9.6-4.303-9.6-9.6S6.703 2.4 12 2.4s9.6 4.303 9.6 9.6-4.303 9.6-9.6 9.6zM6.6 11.4c-.663 0-1.2-.537-1.2-1.2s.537-1.2 1.2-1.2 1.2.537 1.2 1.2-.537 1.2-1.2 1.2zm4.8 0c-.663 0-1.2-.537-1.2-1.2s.537-1.2 1.2-1.2 1.2.537 1.2 1.2-.537 1.2-1.2 1.2zm4.8 0c-.663 0-1.2-.537-1.2-1.2s.537-1.2 1.2-1.2 1.2.537 1.2 1.2-.537 1.2-1.2 1.2zm-9.6 3.6c.995 2.115 3.09 3.6 5.568 3.6s4.573-1.485 5.568-3.6H6.6z"/></svg>
-                    แอด Line และ ส่ง Location ทาง LINE
+                    ส่ง Location ทาง LINE
                 </a>
             </div>
              <button onclick="location.reload()" class="w-full btn btn-primary mt-8 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
@@ -463,6 +470,8 @@
         const checkoutTitle = document.getElementById('checkout-title');
         const addressGroup = document.getElementById('address-group');
         const addressInput = document.getElementById('address');
+        const pickupTimeGroup = document.getElementById('pickup-time-group');
+        const pickupTimeSelect = document.getElementById('pickup-time');
         
         
         // NEW: Function to fetch shop configuration from external file
@@ -790,20 +799,76 @@
             if (orderType === 'pickup') {
                 addressGroup.style.display = 'none';
                 addressInput.required = false;
+                pickupTimeGroup.style.display = 'block'; // Show time selector
+                populatePickupTimes(); // Generate time slots
                 checkoutTitle.innerText = 'ข้อมูลการรับอาหาร';
                 submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร เพื่อรับอาหารที่ร้าน';
             } else if (orderType === 'delivery_manual') {
                  addressGroup.style.display = 'block';
                  addressInput.required = true;
+                 pickupTimeGroup.style.display = 'none'; // Hide time selector
                  checkoutTitle.innerText = 'ข้อมูลการจัดส่ง (รอแจ้งค่าส่ง)';
                  submitBtn.innerText = 'ส่งข้อมูล (รอแจ้งค่าส่ง)';
             } else { // 'delivery'
                 addressGroup.style.display = 'block';
                 addressInput.required = true;
+                pickupTimeGroup.style.display = 'none'; // Hide time selector
                 checkoutTitle.innerText = 'ข้อมูลการจัดส่ง';
                 submitBtn.innerText = 'ยืนยันสั่งอาหาร และให้ชื่อ เบอร์โทร ที่อยู่ เพื่อจัดส่ง';
             }
         });
+
+        // NEW: Function to generate pickup time slots
+        function populatePickupTimes() {
+            if (!shopConfig.openingTime) {
+                console.error("Shop config not loaded, cannot populate times.");
+                return;
+            }
+
+            pickupTimeSelect.innerHTML = ''; // Clear existing options
+            
+            const now = new Date();
+            const leadTimeMinutes = 30; // 30 minutes preparation time
+            let startTime = new Date(now.getTime() + leadTimeMinutes * 60000);
+
+            const [openHour, openMinute] = shopConfig.openingTime.split(':').map(Number);
+            const shopOpen = new Date(now);
+            shopOpen.setHours(openHour, openMinute, 0, 0);
+
+            const [closeHour, closeMinute] = shopConfig.closingTime.split(':').map(Number);
+            const shopClose = new Date(now);
+            shopClose.setHours(closeHour, closeMinute, 0, 0);
+
+            // Start time is whichever is later: now + lead time, or shop opening time
+            if (startTime < shopOpen) {
+                startTime = shopOpen;
+            }
+
+            // Round start time up to the next 30-minute interval
+            const startMinutes = startTime.getMinutes();
+            if (startMinutes > 0 && startMinutes < 30) {
+                startTime.setMinutes(30, 0, 0);
+            } else if (startMinutes > 30) {
+                startTime.setHours(startTime.getHours() + 1, 0, 0, 0);
+            }
+
+            // Add "ASAP" option
+            pickupTimeSelect.add(new Option(`ไปรับตอนนี้`, 'asap'));
+
+            // Generate 30-minute slots
+            let currentTime = new Date(startTime);
+            while (currentTime < shopClose) {
+                const slotEnd = new Date(currentTime.getTime() + 30 * 60000);
+                if (slotEnd > shopClose) break; // Don't create a slot that ends after closing
+
+                const timeString = 
+                    `${String(currentTime.getHours()).padStart(2, '0')}:${String(currentTime.getMinutes()).padStart(2, '0')} - ` +
+                    `${String(slotEnd.getHours()).padStart(2, '0')}:${String(slotEnd.getMinutes()).padStart(2, '0')}`;
+                
+                pickupTimeSelect.add(new Option(timeString, timeString));
+                currentTime = slotEnd;
+            }
+        }
 
         document.getElementById('checkout-form').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -824,6 +889,7 @@
                 name: document.getElementById('nickname').value,
                 phone: document.getElementById('phone').value,
                 address: document.getElementById('address').value,
+                pickupTime: orderType === 'pickup' ? document.getElementById('pickup-time').value : '', // Add pickup time
                 latitude: userLocation ? userLocation.latitude : null,
                 longitude: userLocation ? userLocation.longitude : null,
                 orderDetails: orderDetails,
