@@ -929,9 +929,9 @@
                         thankyouManualModal.style.display = 'flex';
                     } else {
                         // Populate standard Thank You modal
-                        const grandTotal = payload.totalPrice + payload.deliveryFee;
+                        const grandTotal = payload.totalPrice + (payload.deliveryFee > 0 ? payload.deliveryFee : 0);
                         document.getElementById('thankyou-food-total').innerText = `${payload.totalPrice} บาท`;
-                        document.getElementById('thankyou-delivery-fee').innerText = `${payload.deliveryFee} บาท`;
+                        document.getElementById('thankyou-delivery-fee').innerText = `${payload.deliveryFee < 0 ? 'รอแจ้ง' : payload.deliveryFee} บาท`;
                         document.getElementById('thankyou-grand-total').innerText = `${grandTotal} บาท`;
                         
                         const deliveryInstructions = document.getElementById('payment-instructions-delivery');
