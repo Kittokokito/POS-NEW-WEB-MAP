@@ -8,7 +8,6 @@
     <!-- UPDATED: Open Graph Meta Tags -->
     <meta property="og:title" content="ป.ขาหมู เดลิเวอรี">
     <meta property="og:description" content="ราคาเท่าหน้าร้าน ค่าส่งตามจริง">
-    <!-- UPDATED: New Logo URL -->
     <meta property="og:image" content="https://raw.githubusercontent.com/Kittokokito/POS-NEW-WEB-MAP/main/logo.jpg">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -398,6 +397,15 @@
              <button onclick="location.reload()" class="w-full btn btn-primary mt-8 py-4 text-2xl">กลับไปที่หน้าเมนู</button>
         </div>
     </div>
+    
+    <!-- NEW: Error Modal -->
+    <div id="error-modal" class="summary-modal">
+        <div class="modal-content text-center">
+            <h3 class="text-4xl font-bold text-red-600 mb-4">เกิดข้อผิดพลาด</h3>
+            <p class="text-xl text-gray-700 mb-8" id="error-message-text"></p>
+            <button id="close-error-modal-btn" class="w-full btn btn-primary mt-4 py-4 text-2xl">ปิด</button>
+        </div>
+    </div>
 
 
     <script>
@@ -451,6 +459,8 @@
         const thankYouModal = document.getElementById('thankyou-modal');
         const cannotDeliverModal = document.getElementById('cannot-deliver-modal');
         const thankyouManualModal = document.getElementById('thankyou-manual-modal'); // New modal reference
+        const errorModal = document.getElementById('error-modal');
+        const errorMessageText = document.getElementById('error-message-text');
         const summaryList = document.getElementById('summary-list');
         const summaryFoodTotalEl = document.getElementById('summary-food-total');
         const deliveryFeeEl = document.getElementById('delivery-fee');
@@ -473,6 +483,13 @@
         const addressInput = document.getElementById('address');
         const pickupTimeGroup = document.getElementById('pickup-time-group');
         const pickupTimeSelect = document.getElementById('pickup-time');
+        
+        // NEW: Function to show custom error messages
+        function showErrorModal(message) {
+            errorMessageText.innerText = message;
+            errorModal.style.display = 'flex';
+        }
+        document.getElementById('close-error-modal-btn').addEventListener('click', () => errorModal.style.display = 'none');
         
         
         // NEW: Function to fetch shop configuration from external file
@@ -753,7 +770,7 @@
                     }
                 } catch (error) {
                     deliveryFeeEl.innerText = `คำนวณผิดพลาด`;
-                    alert(`เกิดข้อผิดพลาดในการคำนวณค่าส่ง: ${error.message}`);
+                    showErrorModal(`เกิดข้อผิดพลาดในการคำนวณค่าส่ง: ${error.message}`);
                 } finally {
                     getLocationBtn.disabled = false;
                     declineLocationBtn.disabled = false;
@@ -933,7 +950,7 @@
                     throw new Error(result.message);
                 }
             } catch (error) {
-                alert(`เกิดข้อผิดพลาดในการส่งออเดอร์: ${error.message}`);
+                showErrorModal(`เกิดข้อผิดพลาดในการส่งออเดอร์: ${error.message}`);
                 submitBtn.disabled = false;
                 // Restore button text based on order type
                  if (orderType === 'pickup') {
